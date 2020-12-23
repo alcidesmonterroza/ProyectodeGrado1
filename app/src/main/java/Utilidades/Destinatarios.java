@@ -1,4 +1,4 @@
-package Clases;
+package Utilidades;
 
 import java.io.Serializable;
 

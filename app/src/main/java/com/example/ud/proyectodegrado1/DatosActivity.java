@@ -3,7 +3,6 @@ package com.example.ud.proyectodegrado1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Usuario;
-import Clases.UsuarioLogeado;
+import Utilidades.UsuarioLogeado;
 
 public class DatosActivity extends AppCompatActivity {
 

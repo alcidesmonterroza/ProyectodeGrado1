@@ -1,11 +1,13 @@
 package Clases;
 
 import android.os.AsyncTask;
-import android.util.Log;
+
 import com.example.ud.proyectodegrado1.WebService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import Utilidades.UsuarioLogeado;
 
 public class Usuario implements Serializable {
 
@@ -132,7 +134,7 @@ public class Usuario implements Serializable {
         @Override
         protected String doInBackground(String... strings) {
 
-            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula2="+UsuarioLogeado.idusuariologeado;
+            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula2="+ UsuarioLogeado.idusuariologeado;
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
         }

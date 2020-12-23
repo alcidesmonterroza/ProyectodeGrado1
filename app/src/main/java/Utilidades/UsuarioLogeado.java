@@ -1,4 +1,4 @@
-package Clases;
+package Utilidades;
 
 public class UsuarioLogeado {
     public static String idusuariologeado;

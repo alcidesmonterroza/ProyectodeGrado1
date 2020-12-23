@@ -19,11 +19,6 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +46,7 @@
         <ListView
             android:id="@+id/listviewMensajes"
             android:layout_width="match_parent"
-            android:layout_height="47dp" />
+            android:layout_height="205dp" />
 
         <TextView
             android:id="@+id/llaveprivada"
@@ -79,6 +74,12 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desenciptar Mensaje" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine2"

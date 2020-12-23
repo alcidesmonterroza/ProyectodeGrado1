@@ -2,7 +2,6 @@ package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -12,17 +11,14 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Cifradora;
-import Clases.Destinatarios;
+import Utilidades.Destinatarios;
 import Clases.Mensaje;
 import Clases.Usuario;
-import Clases.UsuarioLogeado;
+import Utilidades.UsuarioLogeado;
 
 
 public class EnviaMensaje extends AppCompatActivity {

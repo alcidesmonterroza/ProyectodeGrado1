@@ -2,17 +2,12 @@ package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import Clases.Usuario;
-import Clases.UsuarioLogeado;
 
 public class MainActivity2 extends AppCompatActivity {
 

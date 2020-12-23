@@ -1,25 +1,18 @@
 package com.example.ud.proyectodegrado1;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Mensaje;
-import Clases.UsuarioLogeado;
+import Utilidades.AdaptadorMensajes;
+import Utilidades.UsuarioLogeado;
 
 public class ConsultaMensaje extends AppCompatActivity {
     private RecyclerView contenedor;
@@ -40,8 +33,13 @@ public class ConsultaMensaje extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayAdapter<Mensaje> adapter = new ArrayAdapter<Mensaje>(this, android.R.layout.simple_list_item_1, mensajes);
-        listaMensajes.setAdapter(adapter);
+       // String prueba = "Mensaje: " + mensajes.get(1).getMensaje().toString() +" Fecha: "+ mensajes.get(1).getFecha()+ " Remite: "+ mensajes.get(1).getRemitente() +
+       //         " Clave: "+ mensajes.get(1).getLlave();
+       // Toast.makeText(this, ""+prueba, Toast.LENGTH_LONG).show();
+      //  ArrayAdapter<Mensaje> adapter = new ArrayAdapter<Mensaje>(this, android.R.layout.simple_list_item_1, mensajes);
+        AdaptadorMensajes adaptadorMensajes;
+        adaptadorMensajes = new AdaptadorMensajes(this,0,mensajes);
+        listaMensajes.setAdapter(adaptadorMensajes);
 
         //contenedor.setHasFixedSize(true);
 
