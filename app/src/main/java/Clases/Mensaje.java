@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ud.proyectodegrado1.WebService;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class Mensaje implements Serializable {
@@ -52,10 +53,13 @@ public class Mensaje implements Serializable {
         return resp;
 
     }
+    public ArrayList<Mensaje> ConsultarMensajes() throws ExecutionException, InterruptedException {
 
+        hilo_consultarmensajes a = new hilo_consultarmensajes();
+        ArrayList<Mensaje> resp = a.execute().get();
+        return resp;
 
-
-
+    }
 
     private class hilo_enviarmensaje extends AsyncTask<String,String,String> {
         @Override
@@ -63,6 +67,15 @@ public class Mensaje implements Serializable {
             String Miurl = "https://testud.azurewebsites.net/api/Mensaje?fecha="+getFecha()+"&remitente="+getRemitente()+"&destinatario="+
                     getDestinatario()+"&mensajecifrado="+getMensaje()+"&llave="+getLlave();
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
+            return  a;
+        }
+    }
+
+    private class hilo_consultarmensajes extends AsyncTask<String,String, ArrayList<Mensaje>> {
+        @Override
+        protected ArrayList<Mensaje> doInBackground(String... strings) {
+            String Miurl = "https://testud.azurewebsites.net/api/Mensaje?destinatario1="+getDestinatario();
+            ArrayList<Mensaje> a = WebService.MyWebservicemensajes(Miurl); //el Ws sirve para este caso//
             return  a;
         }
     }

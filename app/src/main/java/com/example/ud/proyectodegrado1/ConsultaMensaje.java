@@ -10,31 +10,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import Clases.Mensaje;
+import Clases.UsuarioLogeado;
 
 public class ConsultaMensaje extends AppCompatActivity {
     private RecyclerView contenedor;
+    private ListView listaMensajes;
+    private ArrayList<Mensaje> mensajes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_mensaje);
 
-        contenedor = findViewById(R.id.reciclerview);
-        contenedor.setHasFixedSize(true);
+        listaMensajes = findViewById(R.id.listviewMensajes);
+        Mensaje msj = new Mensaje("","",UsuarioLogeado.idusuariologeado,"","");
+        try {
+           mensajes = msj.ConsultarMensajes();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        LinearLayoutManager milayoutmanager = new LinearLayoutManager(this);
-        contenedor.setLayoutManager(milayoutmanager);
+        ArrayAdapter<Mensaje> adapter = new ArrayAdapter<Mensaje>(this, android.R.layout.simple_list_item_1, mensajes);
+        listaMensajes.setAdapter(adapter);
 
-        List<Mensaje> mensajes = new ArrayList<Mensaje>();
+        //contenedor.setHasFixedSize(true);
+
+      // LinearLayoutManager milayoutmanager = new LinearLayoutManager(this);
+       // contenedor.setLayoutManager(milayoutmanager);
 
 
-        RecyclerView.Adapter  adaptador = new RecyclerView.Adapter () {
+
+
+        /*RecyclerView.Adapter  adaptador = new RecyclerView.Adapter () {
 
             @NonNull
             @Override
@@ -51,9 +68,9 @@ public class ConsultaMensaje extends AppCompatActivity {
             public int getItemCount() {
                 return 0;
             }
-        };
+        };*/
 
-        contenedor.setAdapter(adaptador);
+       // contenedor.setAdapter(adaptador);
 
 
 

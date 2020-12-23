@@ -65,7 +65,6 @@ public class EnviaMensaje extends AppCompatActivity {
         List<Destinatarios> temporal =  new ArrayList<>();
         List<String>temp = new ArrayList<String>();
 
-        String[][] matriz = null;
         String [] elemento = null;
         for(int i=0;i<usuarios.size();i++ ) {
 

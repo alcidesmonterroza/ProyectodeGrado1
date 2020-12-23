@@ -23,6 +23,8 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import Clases.Mensaje;
+
 public class WebService {
 
     private static Object RuntimeException;
@@ -74,8 +76,7 @@ public class WebService {
             //JsonReader lector = new JsonReader(in);
             JsonParser parseador = new JsonParser();
             JsonObject jsonObject = (JsonObject) parseador.parse(json);
-          //  resTxT1 = jsonObject.get("Tabla").getAsString();
-         //   for(int i = 0 ; i<1; i++){
+
                 ArrayList<String> vector = new ArrayList<String>() ;
                 if (jsonObject.has("Tabla")) {
 
@@ -89,62 +90,8 @@ public class WebService {
                     resTxT1 =  vector;
 
                 }
-           // }
-            //JsonElement raiz = (JsonElement) parseador.parse(in);
-            //JsonObject jsonObject = (JsonObject) parseador.parse(in);
-            //Gson json = new Gson();
-          //  JsonArray lista = jsonObject.getAsJsonArray();
-        //   JsonArray lista = (JsonArray) parseador.parse(in);
-         //  for(int i = 0;i<lista.size();i++) {
-          //  for (JsonElement elemento : lista){
-                   // elemento.getAsString();
-                   // json.newJsonReader(lector);
-           //     resTxT1 = lista.get(i).getAsString();
-             /*JsonObject jsonObject = lista.get(i).getAsJsonObject();
-               if (jsonObject.has("Tabla")) {
-                  resTxT1  = jsonObject.getAsString();
-                }*/
-           //    else{
-           //        resTxT1 [i]="nada";
-           //    }
-
-         //   }
-          //  resTxT1 = jsonObject.get("usu").getAsString();
 
 
-               
-                
-            
-
-            /*String output;
-            JSONObject jsonObject;
-            lector.beginObject();
-            while ((output = lector) != null) {
-                resTxT1  = output;
-                //    i++;
-            }*/
-        /*  lector.hasNext() == usu
-            JSONArray jsonArray = new JSONArray(in);
-            for(int i = 0;i<jsonArray.length();i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if(jsonObject.has("usu")){
-                     resTxT1 = jsonObject.getString("usu");
-                }
-            }*/
-            //JsonParser parseador = new JsonParser();
-            //  JsonElement raiz = parseador.parse();
-
-         /*   Gson json = new Gson();
-            JsonArray lista = raiz.getAsJsonArray();
-            for (JsonElement elemento : lisJta) {}
-                Persona persona = json.fromJson(elemento, Persona.class);
-          //  BufferedReader br = new BufferedReader(in);
-            String output;
-           // int i=0;
-            while ((output = br.readLine()) != null) {
-                resTxT1  = output;
-            //    i++;
-            }*/
 
             con.disconnect();
         } catch (IOException | java.lang.RuntimeException e) {
@@ -152,6 +99,62 @@ public class WebService {
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
                resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
             return null;
+        }
+
+        return resTxT1;
+
+
+    }
+
+    public static ArrayList<Mensaje> MyWebservicemensajes(String urlservicio) {
+
+        ArrayList<Mensaje> resTxT1 = new ArrayList<Mensaje>();
+        try {
+            URL url = new URL(urlservicio);
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/json");
+            if (con.getResponseCode() != 200) {
+                // throw new RuntimeException("Failed:HTTP Error code :" + con.getResponseCode());
+            }
+            InputStreamReader in = new InputStreamReader(con.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String json = br.readLine();
+            //JsonReader lector = new JsonReader(in);
+            JsonParser parseador = new JsonParser();
+            JsonObject jsonObject = (JsonObject) parseador.parse(json);
+
+            ArrayList<Mensaje> vector = new ArrayList<Mensaje>() ;
+            if (jsonObject.has("Tabla")) {
+
+                JsonArray ja= jsonObject.get("Tabla").getAsJsonArray();
+
+                for (JsonElement elemento: ja) {
+                    String fecha =  elemento.getAsJsonObject().get("fecha").toString();
+                    String remitente = elemento.getAsJsonObject().get("remitente").toString();;
+                    String destinatario = elemento.getAsJsonObject().get("destinatario").toString();;
+                    String mensaje = elemento.getAsJsonObject().get("mensaje").toString();;
+                    String llave = elemento.getAsJsonObject().get("llave").toString();;
+                    Mensaje msj = new Mensaje(fecha,remitente,destinatario,mensaje,llave);
+
+                    vector.add(msj);
+                }
+
+                resTxT1 =  vector;
+
+            }
+
+
+
+            con.disconnect();
+        } catch (IOException | java.lang.RuntimeException e) {
+
+            //System.out.println("error"+ e);
+            // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
+           // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
+            Mensaje ms = new Mensaje("1","2","3","4","5");
+            resTxT1.add(0, ms);
+            return resTxT1;
         }
 
         return resTxT1;

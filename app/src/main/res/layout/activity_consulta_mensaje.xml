@@ -48,11 +48,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reciclerview"
+        <ListView
+            android:id="@+id/listviewMensajes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:verticalScrollbarPosition="right" />
+            android:layout_height="47dp" />
 
         <TextView
             android:id="@+id/llaveprivada"
