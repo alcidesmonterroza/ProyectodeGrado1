@@ -91,8 +91,6 @@ public class WebService {
 
                 }
 
-
-
             con.disconnect();
         } catch (IOException | java.lang.RuntimeException e) {
             //System.out.println("error"+ e);
@@ -102,7 +100,6 @@ public class WebService {
         }
 
         return resTxT1;
-
 
     }
 
@@ -130,11 +127,13 @@ public class WebService {
                 JsonArray ja= jsonObject.get("Tabla").getAsJsonArray();
 
                 for (JsonElement elemento: ja) {
-                    String fecha =  elemento.getAsJsonObject().get("fecha").toString();
-                    String remitente = elemento.getAsJsonObject().get("remitente").toString();;
-                    String destinatario = elemento.getAsJsonObject().get("destinatario").toString();;
-                    String mensaje = elemento.getAsJsonObject().get("mensaje").toString();;
-                    String llave = elemento.getAsJsonObject().get("llave").toString();;
+                    String fechat0 =  elemento.getAsJsonObject().get("fecha").toString();
+                    String fecha = fechat0.replaceAll("T00:00:00","");
+
+                    String remitente = elemento.getAsJsonObject().get("nombreremite").toString();
+                    String destinatario = elemento.getAsJsonObject().get("destinatario").toString();
+                    String mensaje = elemento.getAsJsonObject().get("mensaje").toString();
+                    String llave = elemento.getAsJsonObject().get("llave").toString();
                     Mensaje msj = new Mensaje(fecha,remitente,destinatario,mensaje,llave);
 
                     vector.add(msj);
@@ -143,8 +142,6 @@ public class WebService {
                 resTxT1 =  vector;
 
             }
-
-
 
             con.disconnect();
         } catch (IOException | java.lang.RuntimeException e) {

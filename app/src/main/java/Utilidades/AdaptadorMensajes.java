@@ -35,16 +35,21 @@ public class AdaptadorMensajes extends ArrayAdapter<Mensaje> {
     public int getCount(){
         return lMensajes.size();
     }
+
     public Mensaje getItem(Mensaje posicion) {
         return posicion;
     }
+
     public long getItemId(int posicion){
         return posicion;
     }
+
     public static class ViewHolder {
         public TextView FechaMensaje;
         public TextView De;
         public TextView ContenidoMensaje;
+        public TextView Clave;
+
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
@@ -57,15 +62,16 @@ public class AdaptadorMensajes extends ArrayAdapter<Mensaje> {
                 holder.FechaMensaje = (TextView) vi.findViewById(R.id.textfecha);
                 holder.De = (TextView) vi.findViewById(R.id.textremitente);
                 holder.ContenidoMensaje = (TextView) vi.findViewById(R.id.textmensaje);
+                holder.Clave = (TextView) vi.findViewById(R.id.textClave);
                 vi.setTag(holder);
             } else {
-
                 holder = (ViewHolder) vi.getTag();
             }
 
             holder.FechaMensaje.setText(lMensajes.get(position).getFecha());
             holder.De.setText(lMensajes.get(position).getRemitente());
-            holder.ContenidoMensaje.setText((lMensajes.get(position).getMensaje()));
+            holder.ContenidoMensaje.setText(lMensajes.get(position).getMensaje());
+            holder.Clave.setText(lMensajes.get(position).getLlave());
 
         } catch (Exception e) {
 

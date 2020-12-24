@@ -22,4 +22,11 @@
         android:layout_height="wrap_content"
         android:text="Mensaje" />
 
+    <TextView
+        android:id="@+id/textClave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clave"
+        android:visibility="visible"/>
+
 </LinearLayout>
