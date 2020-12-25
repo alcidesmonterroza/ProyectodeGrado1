@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,8 @@ import Utilidades.UsuarioLogeado;
 public class ConsultaMensaje extends AppCompatActivity {
     private ListView listaMensajes;
     private ArrayList<Mensaje> mensajes;
-    private TextView  msjclaro,llaveclara;
+    private TextView  msjclaro;
+    private EditText llaveclara;
     private String fechasel,remitesel,menssel,llavesel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +32,13 @@ public class ConsultaMensaje extends AppCompatActivity {
         setContentView(R.layout.activity_consulta_mensaje);
         msjclaro = findViewById(R.id.textmensajeclaro);
         llaveclara = findViewById(R.id.text_llaveclara);
+        menssel =null;
+        llavesel=null;
 
         listaMensajes = findViewById(R.id.listviewMensajes);
 
-        Mensaje msj = new Mensaje("","",UsuarioLogeado.idusuariologeado,"","");
-        try {
-           mensajes = msj.ConsultarMensajes();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cargardatos();
 
-       // String prueba = "Mensaje: " + mensajes.get(1).getMensaje().toString() +" Fecha: "+ mensajes.get(1).getFecha()+ " Remite: "+ mensajes.get(1).getRemitente() +
-       //         " Clave: "+ mensajes.get(1).getLlave();
-       // Toast.makeText(this, ""+prueba, Toast.LENGTH_LONG).show();
-      //  ArrayAdapter<Mensaje> adapter = new ArrayAdapter<Mensaje>(this, android.R.layout.simple_list_item_1, mensajes);
-        AdaptadorMensajes adaptadorMensajes;
-        adaptadorMensajes = new AdaptadorMensajes(this,0,mensajes);
-        listaMensajes.setAdapter(adaptadorMensajes);
 
         listaMensajes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -59,26 +49,51 @@ public class ConsultaMensaje extends AppCompatActivity {
                 llavesel = mensajes.get(position).getLlave().toString();
                //Toast.makeText(ConsultaMensaje.this, "Has pulsado: "+ menssel + " "+llavesel, Toast.LENGTH_LONG).show();
 
+
             }
         });
 
     }
 
+    public void actualizarmensajes(View v){
+        cargardatos();
+    }
+    public void cargardatos(){
+
+        Mensaje msj = new Mensaje("","",UsuarioLogeado.idusuariologeado,"","");
+        try {
+            mensajes = msj.ConsultarMensajes();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        AdaptadorMensajes adaptadorMensajes;
+        adaptadorMensajes = new AdaptadorMensajes(this,0,mensajes);
+        listaMensajes.setAdapter(adaptadorMensajes);
+
+    }
+
     public void desencriptallave(View v){
-        Cifradora descifra = new Cifradora();
+        if(llavesel!=null){
 
-        Integer llavecita = Integer.parseInt(llavesel.replace("\"", ""));
+            Cifradora descifra = new Cifradora();
 
+            Integer llavecita = Integer.parseInt(llavesel.replace("\"", ""));
 
-        //  Toast.makeText(ConsultaMensaje.this, "esto"+prueba, Toast.LENGTH_SHORT).show();
-        descifra.setValordesplazamiento(llavecita);
-        llaveclara.setText(descifra.CifrarLlaveporSustitucion());
+            descifra.setValordesplazamiento(llavecita);
+            llaveclara.setText(descifra.CifrarLlaveporSustitucion());
+        }
+        else{
+            Toast.makeText(this, "Seleccione un Mensaje", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
 
     public void desencriptamsj(View v){
-        if(llaveclara.getText().toString().isEmpty() || llaveclara.getText().toString().trim().length()<1){
+        if(llaveclara.getText().toString().isEmpty() || llaveclara.getText().toString().trim().length()<1 || menssel == null){
              Toast.makeText(this, " Ojo no hay llave para desencriptar", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -88,13 +103,11 @@ public class ConsultaMensaje extends AppCompatActivity {
             }
             else{
                 Cifradora descifra1 = new Cifradora();
-                // Mensaje mensajeseleccionado = (Mensaje) listaMensajes.getSelectedItem();
-                // Toast.makeText(this, ""+ mensajeseleccionado.getMensaje(), Toast.LENGTH_SHORT).show();
+
                 int longi = menssel.length();
                 String msjlimpiacomilla1 = menssel.substring(1,longi-1);
 
-                // Toast.makeText(ConsultaMensaje.this, ""+ prueba, Toast.LENGTH_LONG).show();
-                String msjlimpio = msjlimpiacomilla1;
+                String msjlimpio = msjlimpiacomilla1.replace("\\","");
 
                 descifra1.setMensajecifrado(msjlimpio);
                 descifra1.setValordesplazamiento(Integer.parseInt(llaveclara.getText().toString()));
