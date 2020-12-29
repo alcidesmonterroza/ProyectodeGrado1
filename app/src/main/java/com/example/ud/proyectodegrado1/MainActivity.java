@@ -14,14 +14,12 @@ import java.util.concurrent.ExecutionException;
 import Clases.Usuario;
 import Utilidades.UsuarioLogeado;
 
-import static android.view.View.VISIBLE;
-
 public class MainActivity extends AppCompatActivity {
 
-    private EditText usuario, contrasena,cedula,nombre,apellido,alias,correo,telefono,clave;
-    private Button validar,registrar;
-    private TextView salida,salida2;
-    String reciborespuesta,filausuario,resp;
+    private EditText usuario, contrasena;
+    private Button validar;
+    private TextView salida;
+    String reciborespuesta,resp;
 
 
     @Override
@@ -32,36 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         usuario = findViewById(R.id.usu);
         contrasena = findViewById(R.id.clave);
-        cedula = findViewById(R.id.ced);
-        nombre = findViewById(R.id.nom);
-        apellido = findViewById(R.id.ape);
-        alias = findViewById(R.id.ali);
-        correo = findViewById(R.id.editTextTextEmailAddress2);
-        telefono = findViewById(R.id.editTextPhone);
-        clave = findViewById(R.id.editTextTextPassword);
-        salida = findViewById(R.id.textView);
-        salida2 = findViewById(R.id.textView5);
-        validar = findViewById(R.id.button2);
-        registrar = findViewById(R.id.button3);
-
-    }
-
-    public void registrarusuario(View v) throws ExecutionException, InterruptedException {
-
-        String iden = cedula.getText().toString();
-        String name = nombre.getText().toString();
-        String apell = apellido.getText().toString();
-        String nick = alias.getText().toString();
-        String email = correo.getText().toString();
-        String tele = telefono.getText().toString();
-        String clav = clave.getText().toString();
-        String perfil = "Usuario";
-
-        Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil);
-
-        salida2.setText(usu.Registrar_Usuario());
-        salida2.setVisibility(VISIBLE);
-
+        salida = findViewById(R.id.textView_salida);
     }
 
     public void validaringreso(View v) throws ExecutionException, InterruptedException {
@@ -81,13 +50,18 @@ public class MainActivity extends AppCompatActivity {
             UsuarioLogeado.idusuariologeado = datosusuario[0];
             UsuarioLogeado.clave = datosusuario[6];
             salida.setText(UsuarioLogeado.idusuariologeado);
-            String nombrecompleto = datosusuario[1] + " " + datosusuario[2];
-            Intent int01 = new Intent(MainActivity.this, MainActivity2.class);
-            int01.putExtra("USUARIO", nombrecompleto);
+            UsuarioLogeado.nombrecompleto= datosusuario[1] + " " + datosusuario[2];
+            Intent int01 = new Intent(MainActivity.this, ConsultaMensaje.class);
+           // int01.putExtra("USUARIO", nombrecompleto);
             startActivity(int01);
         }
 
 
+    }
+
+    public void registrarusuario(View v){
+        Intent registro = new Intent(MainActivity.this,Registro.class);
+        startActivity(registro);
     }
 /*
      private class usuariologeado extends AsyncTask<String,Void,Void>{

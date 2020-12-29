@@ -1,7 +1,12 @@
 package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -22,20 +27,27 @@ import Utilidades.UsuarioLogeado;
 
 
 public class EnviaMensaje extends AppCompatActivity {
+
     private Spinner listausuarios;
-    private TextView salida,fechaactual;
+    private TextView salida,fechaactual,mostrarusuario;
     private EditText textomensaje, llaveprivada;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_envia_mensaje);
+
+        mostrarusuario = findViewById(R.id.textViewUsuario);
+        mostrarusuario.setText("Usuario: "+UsuarioLogeado.nombrecompleto);
+        toolbar = (Toolbar) findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
+
         listausuarios = findViewById(R.id.spinner_destino);
         salida = findViewById(R.id.textView18);
         fechaactual = findViewById(R.id.textView14);
         textomensaje = findViewById(R.id.editTextTextMultiLine);
         llaveprivada = findViewById(R.id.text_llaveprivada);
-
 
         //CAPTURA DE FECHA ACTUAL
         long date = System.currentTimeMillis();
@@ -51,6 +63,41 @@ public class EnviaMensaje extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+
+                // return true;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     public void datosdeinicio() throws ExecutionException, InterruptedException {
@@ -127,11 +174,10 @@ public class EnviaMensaje extends AppCompatActivity {
                                  llavecifrada);
                          salida.setText(nuevomensaje.EnviarMensaje());
                      }
-
             }
-
-
         }
 
-    }
+
+
+}
 

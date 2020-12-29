@@ -13,6 +13,9 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
+        <include android:id="@+id/appbar"
+            layout="@layout/toolbar_menu" />
+
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"

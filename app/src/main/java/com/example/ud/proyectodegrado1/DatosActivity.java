@@ -1,9 +1,12 @@
 package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,13 +21,19 @@ public class DatosActivity extends AppCompatActivity {
 
     private EditText nombre, apellido, alias, email, telefono, clave;
     private String respuesta, respuesta1, respuesta2;
-    private TextView salida;
+    private TextView salida,mostrarusuario;
+    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datos);
+
+        mostrarusuario = findViewById(R.id.textViewUsuario);
+        mostrarusuario.setText("Usuario: "+UsuarioLogeado.nombrecompleto);
+        toolbar = (Toolbar) findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
 
         nombre = findViewById(R.id.nombretext);
         apellido = findViewById(R.id.apetext);
@@ -41,6 +50,44 @@ public class DatosActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menumensajes, menu);
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+
+                // return true;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -71,8 +118,6 @@ public class DatosActivity extends AppCompatActivity {
         String respuesta = u.Actualizar_Usuario();
         salida.setText(respuesta);
         Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
-        //actualizardatos a = new actualizardatos();
-        // a.execute();
 
     }
 
@@ -89,11 +134,10 @@ public class DatosActivity extends AppCompatActivity {
             Intent intent03 = new Intent(DatosActivity.this, MainActivity.class);
             startActivity(intent03);
 
-            // eliminarusuario e = new eliminarusuario();
-            // e.execute();
-
         }
     }
+
+
 }
 
 

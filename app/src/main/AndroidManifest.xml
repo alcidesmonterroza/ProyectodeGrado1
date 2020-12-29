@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultaMensaje"></activity>
+        <activity android:name=".Registro"></activity>
+        <activity android:name=".ConsultaMensaje" />
         <activity android:name=".DatosActivity" />
         <activity android:name=".EnviaMensaje" />
-        <activity android:name=".MainActivity2" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,9 +1,13 @@
 package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,15 +25,24 @@ import Utilidades.AdaptadorMensajes;
 import Utilidades.UsuarioLogeado;
 
 public class ConsultaMensaje extends AppCompatActivity {
+
     private ListView listaMensajes;
     private ArrayList<Mensaje> mensajes;
-    private TextView  msjclaro;
+    private TextView  msjclaro, mostrarusuario;
     private EditText llaveclara;
     private String fechasel,remitesel,menssel,llavesel;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_mensaje);
+
+        mostrarusuario = findViewById(R.id.textViewUsuario);
+        mostrarusuario.setText("Usuario: "+UsuarioLogeado.nombrecompleto);
+        toolbar = (Toolbar) findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
+
         msjclaro = findViewById(R.id.textmensajeclaro);
         llaveclara = findViewById(R.id.text_llaveclara);
         menssel =null;
@@ -49,9 +62,46 @@ public class ConsultaMensaje extends AppCompatActivity {
                 llavesel = mensajes.get(position).getLlave().toString();
                //Toast.makeText(ConsultaMensaje.this, "Has pulsado: "+ menssel + " "+llavesel, Toast.LENGTH_LONG).show();
 
-
             }
         });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menumensajes, menu);
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+
+                // return true;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -119,6 +169,9 @@ public class ConsultaMensaje extends AppCompatActivity {
         }
 
     }
+
+
+
 
 
 }

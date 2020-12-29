@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">ProyectodeGrado1</string>
+    <string name="app_name"></string>
     <string name="action_settings">Mis Datos</string>
     <string name="nuevomensaje">Nuevo Mensaje</string>
     <string name="recibidos">Mensajes Recibidos</string>
     <string name="enviados">Mensajes Enviados</string>
+    <string name="Título">Mensajería Cifrada</string>
+    <string name="Subtítulo">Proyecto de Grado U.Distrital</string>
 
 </resources>
