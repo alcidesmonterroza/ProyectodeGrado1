@@ -6,5 +6,12 @@
     <string name="enviados">Mensajes Enviados</string>
     <string name="Título">Mensajería Cifrada</string>
     <string name="Subtítulo">Proyecto de Grado U.Distrital</string>
+    <string name="Administrar">Administrar</string>
+    <string name="title_activity_administrar">Administrar</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

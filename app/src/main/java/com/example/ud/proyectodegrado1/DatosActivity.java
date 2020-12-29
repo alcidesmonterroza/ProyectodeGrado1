@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -55,13 +56,24 @@ public class DatosActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menumensajes, menu);
-        return true;
 
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        String per = UsuarioLogeado.perfil.replace("\"", "");
+        Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+        if (per.equals("Usuario")) {
+            menu.removeItem(R.id.admin);
+        }
+        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
 
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -83,13 +95,18 @@ public class DatosActivity extends AppCompatActivity {
                 break;
             case R.id.enviados:
                 Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                break;
 
-                // return true;
+            case R.id.admin:
+                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                Intent intent06 = new Intent(this,Administrar.class);
+                startActivity(intent06);
                 break;
         }
-        return super.onOptionsItemSelected(item);
 
+        return super.onOptionsItemSelected(item);
     }
+
 
     public void cargardatos() throws ExecutionException, InterruptedException {
         Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario");

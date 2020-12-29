@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             UsuarioLogeado.clave = datosusuario[6];
             salida.setText(UsuarioLogeado.idusuariologeado);
             UsuarioLogeado.nombrecompleto= datosusuario[1] + " " + datosusuario[2];
+            UsuarioLogeado.perfil = datosusuario[7];
             Intent int01 = new Intent(MainActivity.this, ConsultaMensaje.class);
            // int01.putExtra("USUARIO", nombrecompleto);
             startActivity(int01);

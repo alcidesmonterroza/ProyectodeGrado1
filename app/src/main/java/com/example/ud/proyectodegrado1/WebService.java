@@ -24,6 +24,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import Clases.Mensaje;
+import Clases.Usuario;
 
 public class WebService {
 
@@ -58,7 +59,7 @@ public class WebService {
         return resTxT1;
     }
 
-    public static ArrayList<String> MyWebserviceusuarios(String urlservicio) {
+    public static ArrayList<String> MyWebservicedestinatarios(String urlservicio) {
 
         ArrayList<String> resTxT1 = new ArrayList<String>();
         try {
@@ -151,6 +152,67 @@ public class WebService {
            // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
             Mensaje ms = new Mensaje("1","2","3","4","5");
             resTxT1.add(0, ms);
+            return resTxT1;
+        }
+
+        return resTxT1;
+
+
+    }
+
+
+    public static ArrayList<Usuario> MyWebserviceusuario(String urlservicio) {
+
+        ArrayList<Usuario> resTxT1 = new ArrayList<Usuario>();
+        try {
+            URL url = new URL(urlservicio);
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/json");
+            if (con.getResponseCode() != 200) {
+                // throw new RuntimeException("Failed:HTTP Error code :" + con.getResponseCode());
+            }
+            InputStreamReader in = new InputStreamReader(con.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String json = br.readLine();
+            //JsonReader lector = new JsonReader(in);
+            JsonParser parseador = new JsonParser();
+            JsonObject jsonObject = (JsonObject) parseador.parse(json);
+
+            ArrayList<Usuario> vector = new ArrayList<Usuario>() ;
+            if (jsonObject.has("Tabla")) {
+
+                JsonArray ja= jsonObject.get("Tabla").getAsJsonArray();
+
+                for (JsonElement elemento: ja) {
+
+
+                    String id = elemento.getAsJsonObject().get("id_usuario").toString();
+                    String nombre = elemento.getAsJsonObject().get("nombre").toString();
+                    String apellido = elemento.getAsJsonObject().get("apellido").toString();
+                    String alias = elemento.getAsJsonObject().get("alias").toString();
+                    String email = elemento.getAsJsonObject().get("email").toString();
+                    String telefono = elemento.getAsJsonObject().get("telefono").toString();
+                    String clave = elemento.getAsJsonObject().get("clave").toString();
+                    String perfil = elemento.getAsJsonObject().get("perfil").toString();
+
+                    Usuario usuario = new Usuario(id,nombre,apellido,alias,email,telefono,clave,perfil);
+
+                    vector.add(usuario);
+                }
+
+                resTxT1 =  vector;
+
+            }
+
+            con.disconnect();
+        } catch (IOException | java.lang.RuntimeException e) {
+
+            //System.out.println("error"+ e);
+            // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
+            // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
+            Usuario us = new Usuario("1","2","3","4","5","6","7","8");
+            resTxT1.add(0, us);
             return resTxT1;
         }
 

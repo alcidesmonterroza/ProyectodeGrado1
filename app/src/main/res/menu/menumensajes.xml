@@ -23,4 +23,9 @@
         android:title="@string/enviados"
         android:orderInCategory="100"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/admin"
+        android:title="@string/Administrar"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

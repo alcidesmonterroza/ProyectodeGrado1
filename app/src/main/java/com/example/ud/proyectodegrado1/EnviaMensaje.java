@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -66,7 +67,20 @@ public class EnviaMensaje extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menumensajes, menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        String per = UsuarioLogeado.perfil.replace("\"", "");
+        Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+        if (per.equals("Usuario")) {
+            menu.removeItem(R.id.admin);
+        }
         return true;
     }
 
@@ -92,18 +106,23 @@ public class EnviaMensaje extends AppCompatActivity {
                 break;
             case R.id.enviados:
                 Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                break;
 
-                // return true;
+            case R.id.admin:
+                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                Intent intent06 = new Intent(this,Administrar.class);
+                startActivity(intent06);
                 break;
         }
-        return super.onOptionsItemSelected(item);
 
+        return super.onOptionsItemSelected(item);
     }
+
 
     public void datosdeinicio() throws ExecutionException, InterruptedException {
         List<String> usuarios = new ArrayList<String>();
         Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario");
-        usuarios = usu.Consultar_Usuario();
+        usuarios = usu.Consultar_destinatarios();
        // salida.setText(usuarios.get(0).toString()+ usuarios.get(1).toString()+usuarios.get(2).toString());
         List<Destinatarios> temporal =  new ArrayList<>();
         List<String>temp = new ArrayList<String>();
