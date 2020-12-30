@@ -40,13 +40,13 @@ public class Administrar extends AppCompatActivity {
         salida= findViewById(R.id.txt_salida);
         usuario =findViewById(R.id.textusuario);
         nombre = findViewById(R.id.text_nombre);
-        apellido = findViewById(R.id.text_nombre);
-        alias = findViewById(R.id.text_nombre);
-        email = findViewById(R.id.text_nombre);
-        telefono = findViewById(R.id.text_nombre);
-        clave = findViewById(R.id.text_nombre);
-        perfil = findViewById(R.id.text_nombre);
-        listausuarios=findViewById(R.id.List_usuarios);
+        apellido = findViewById(R.id.text_ape);
+        alias = findViewById(R.id.text_alias);
+        email = findViewById(R.id.text_email);
+        telefono = findViewById(R.id.text_tel);
+        clave = findViewById(R.id.text_clave);
+        perfil = findViewById(R.id.text_perfil);
+        //listausuarios=findViewById(R.id.List_usuarios);
         btnEliminar =findViewById(R.id.button_eliminar);
         btnModificar = findViewById(R.id.button_modi);
 
@@ -60,27 +60,53 @@ public class Administrar extends AppCompatActivity {
 
     public void buscarusuario(View v) throws ExecutionException, InterruptedException {
 
-        Usuario u = new Usuario(usuario.getText().toString(),"","","","","","","");
-        usuarios=u.Consultar_usuarios();
+       if(usuario.getText().toString().isEmpty() || usuario.getText().toString().trim().length()<1){
+           Toast.makeText(this, "Digite el Id del Usuario", Toast.LENGTH_SHORT).show();
+       }
+       else{
 
-        nombre.setText(usuarios.get(0).getNombre());
-        apellido.setText(usuarios.get(0).getApellido());
-        alias.setText(usuarios.get(0).getAlias());
-        email.setText(usuarios.get(0).getEmail());
-        telefono.setText(usuarios.get(0).getTelefono());
-        clave.setText(usuarios.get(0).getClave());
-        perfil.setText(usuarios.get(0).getPerfil());
+           Usuario u = new Usuario(usuario.getText().toString(),"","","","","","","");
+           usuarios=u.Consultar_usuarios();
+           //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
+           if(usuarios.isEmpty()){
+               Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_SHORT).show();
+           }
+           else{
+               Usuario encontrado = usuarios.get(0);
+               nombre.setText(encontrado.getNombre().replace("\"",""));
+               apellido.setText(encontrado.getApellido().replace("\"",""));
+               alias.setText(encontrado.getAlias().replace("\"",""));
+               email.setText(encontrado.getEmail().replace("\"",""));
+               telefono.setText(encontrado.getTelefono().replace("\"",""));
+               clave.setText(encontrado.getClave().replace("\"",""));
+               perfil.setText(encontrado.getPerfil().replace("\"",""));
+           }
+
+       }
 
     }
-    public void eliminarusuario(View v){
 
+    public void eliminarusuario(View v) throws ExecutionException, InterruptedException {
 
-
+        Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
+                apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
+                telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
+        String respuesta = u.Eliminar_Usuario();
+        String resp = respuesta.replace("\"", "");
+        if (resp.equals("Todo OK")) {
+            salida.setText("Usuario Eliminado");
+            Toast.makeText(Administrar.this, "Usuario Eliminado", Toast.LENGTH_LONG).show();
+        }
     }
-    public void modificarusuario(View v){
 
+    public void modificarusuario(View v) throws ExecutionException, InterruptedException {
 
-
+        Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
+                apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
+                telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
+        String respuesta = u.Actualizar_Usuario();
+        salida.setText(respuesta);
+        Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
     }
 
     //funciones del menu
@@ -96,7 +122,7 @@ public class Administrar extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         String per = UsuarioLogeado.perfil.replace("\"", "");
-        Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
         if (per.equals("Usuario")) {
             menu.removeItem(R.id.admin);
         }

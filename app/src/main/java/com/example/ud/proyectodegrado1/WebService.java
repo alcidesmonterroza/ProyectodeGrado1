@@ -211,7 +211,7 @@ public class WebService {
             //System.out.println("error"+ e);
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
             // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
-            Usuario us = new Usuario("1","2","3","4","5","6","7","8");
+            Usuario us = new Usuario("","","","","","","","");
             resTxT1.add(0, us);
             return resTxT1;
         }

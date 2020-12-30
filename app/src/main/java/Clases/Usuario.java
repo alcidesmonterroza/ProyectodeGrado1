@@ -130,9 +130,9 @@ public class Usuario implements Serializable {
     private class hilo_actualizarusuario extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... strings) {
-            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula1="+UsuarioLogeado.idusuariologeado
+            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula1="+getid()
                     +"&nombre1="+getNombre()+"&apellido1="+ getApellido()+"&alias1="+getAlias()
-                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1=Usuario";
+                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil();
 
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
@@ -143,7 +143,7 @@ public class Usuario implements Serializable {
         @Override
         protected String doInBackground(String... strings) {
 
-            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula2="+ UsuarioLogeado.idusuariologeado;
+            String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula2="+getid();
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
         }
