@@ -47,15 +47,19 @@
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E91E63"
             android:textSize="5sp" />
+            <!--android:background="#E91E63"-->
+
 
         <ListView
             android:id="@+id/listviewMensajes"
             style="@style/Widget.AppCompat.Light.ListView.DropDown"
             android:layout_width="match_parent"
             android:layout_height="239dp"
-            android:contextClickable="true" />
+            android:contextClickable="true"
+            android:listSelector="@drawable/estadolist" />
+            <!--android:background="@drawable/estadolist"-->
+
 
         <Button
             android:id="@+id/button5"
