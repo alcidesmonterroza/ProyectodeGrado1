@@ -23,6 +23,7 @@
             android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#ECE6E8"
             android:text="MIS MENSAJES"
             android:textAlignment="textStart"
             android:textSize="18sp"

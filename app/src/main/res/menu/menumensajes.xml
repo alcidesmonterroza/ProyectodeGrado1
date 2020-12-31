@@ -22,7 +22,8 @@
         android:id="@+id/enviados"
         android:title="@string/enviados"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        android:visible="false"/>
     <item
         android:id="@+id/admin"
         android:title="@string/Administrar"
