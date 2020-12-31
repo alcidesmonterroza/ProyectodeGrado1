@@ -112,6 +112,7 @@
 
         <Button
             android:id="@+id/button_actualizar"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="actualizar"
@@ -120,10 +121,13 @@
         <TextView
             android:id="@+id/textView11"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#E91E63"
+            android:textSize="5sp" />
 
         <Button
             android:id="@+id/button_eliminar"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="eliminar"

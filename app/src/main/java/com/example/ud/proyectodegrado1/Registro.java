@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -53,10 +54,16 @@ public class Registro extends AppCompatActivity {
         String perfil = "Usuario";
 
         Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil);
+        String resp = usu.Registrar_Usuario();
 
-        salida2.setText(usu.Registrar_Usuario());
+        if(resp.substring(1,3).equals("Se")){
+
+            salida2.setText("El Usuario ya existe en la Base de datos");
+        }
+        else{
+            salida2.setText(resp);
+        }
         salida2.setVisibility(VISIBLE);
-
     }
 
     public void vuelvelogin(View v){

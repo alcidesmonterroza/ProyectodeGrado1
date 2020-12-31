@@ -50,6 +50,8 @@ public class Administrar extends AppCompatActivity {
         btnEliminar =findViewById(R.id.button_eliminar);
         btnModificar = findViewById(R.id.button_modi);
 
+
+
         mostrarusuario = findViewById(R.id.textViewUsuario);
         mostrarusuario.setText("Usuario: "+ UsuarioLogeado.nombrecompleto);
         toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -57,6 +59,7 @@ public class Administrar extends AppCompatActivity {
 
 
     }
+
 
     public void buscarusuario(View v) throws ExecutionException, InterruptedException {
 
@@ -70,6 +73,7 @@ public class Administrar extends AppCompatActivity {
            //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
            if(usuarios.isEmpty()){
                Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_SHORT).show();
+               salida.setText("Usuario No Existe");
            }
            else{
                Usuario encontrado = usuarios.get(0);
@@ -80,6 +84,8 @@ public class Administrar extends AppCompatActivity {
                telefono.setText(encontrado.getTelefono().replace("\"",""));
                clave.setText(encontrado.getClave().replace("\"",""));
                perfil.setText(encontrado.getPerfil().replace("\"",""));
+
+
            }
 
        }
@@ -88,25 +94,83 @@ public class Administrar extends AppCompatActivity {
 
     public void eliminarusuario(View v) throws ExecutionException, InterruptedException {
 
-        Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
-                apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
-        String respuesta = u.Eliminar_Usuario();
-        String resp = respuesta.replace("\"", "");
-        if (resp.equals("Todo OK")) {
-            salida.setText("Usuario Eliminado");
-            Toast.makeText(Administrar.this, "Usuario Eliminado", Toast.LENGTH_LONG).show();
+        if(usuario.getText().toString().isEmpty() || usuario.getText().toString().trim().length()<1){
+            Toast.makeText(this, "Digite el Id del Usuario", Toast.LENGTH_SHORT).show();
+            salida.setText("");
         }
+        else{
+            Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","");
+            usuarios=ue.Consultar_usuarios();
+            //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
+            if(usuarios.isEmpty()){
+                Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_SHORT).show();
+                salida.setText("Usuario No Existe");
+            }
+            else{
+
+                salida.setText("");
+                Usuario u = new Usuario(usuario.getText().toString(), "","", "", "","","","");
+                String respuesta = u.Eliminar_Usuario();
+                String resp = respuesta.replace("\"", "");
+                if (resp.equals("Todo OK")) {
+                    salida.setText("Usuario Eliminado");
+                    Toast.makeText(Administrar.this, "Usuario Eliminado", Toast.LENGTH_LONG).show();
+                    nombre.setText("");
+                    apellido.setText("");
+                    alias.setText("");
+                    email.setText("");
+                    telefono.setText("");
+                    clave.setText("");
+                    perfil.setText("");
+
+                }
+
+            }
+
+        }
+
+
     }
 
     public void modificarusuario(View v) throws ExecutionException, InterruptedException {
 
-        Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
-                apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
-        String respuesta = u.Actualizar_Usuario();
-        salida.setText(respuesta);
-        Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
+        if(usuario.getText().toString().isEmpty() || usuario.getText().toString().trim().length()<1){
+            Toast.makeText(this, "Digite el Id del Usuario", Toast.LENGTH_SHORT).show();
+        }
+        else{
+
+            if(nombre.getText().toString().isEmpty() && apellido.getText().toString().isEmpty() && alias.getText().toString().isEmpty()
+                    && email.getText().toString().isEmpty() && telefono.getText().toString().isEmpty() && clave.getText().toString().isEmpty()
+                    && perfil.getText().toString().isEmpty()){
+                Toast.makeText(this, "Campos en blanco", Toast.LENGTH_SHORT).show();
+
+            }
+            else{
+                Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","");
+                usuarios=ue.Consultar_usuarios();
+                //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
+                if(usuarios.isEmpty()){
+                    Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_SHORT).show();
+                    salida.setText("Usuario No Existe");
+                }
+                else{
+
+                    salida.setText("");
+                    Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
+                            apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
+                            telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
+                    String respuesta = u.Actualizar_Usuario();
+                    salida.setText(respuesta);
+                    Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+        }
+
+
+
     }
 
     //funciones del menu
