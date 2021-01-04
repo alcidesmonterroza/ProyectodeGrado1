@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         resp = reciborespuesta.replace("\"", "");
 
         if (resp.equals("No")||resp.equals("")){
-            salida.setText("No Existe");
+            salida.setText("El Usuario No Existe o Clave Errada");
+            Toast.makeText(this, "El Usuario No Existe o Clave Errada", Toast.LENGTH_SHORT).show();
         }
         else{
             String [] datosusuario = resp.split(",");
@@ -64,41 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Intent registro = new Intent(MainActivity.this,Registro.class);
         startActivity(registro);
     }
-/*
-     private class usuariologeado extends AsyncTask<String,Void,Void>{
-
-        @Override
-        protected Void doInBackground(String... strings) {
-
-            String Miurl1 = "https://testud.azurewebsites.net/api/Usuariot?idusuario="+UsuarioLogeado.idusuariologeado;
-            //Toast.makeText(MainActivity.this, " "+ Miurl1 , Toast.LENGTH_LONG).show();
-            filausuario = WebService.MyWebservice(Miurl1);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void Result)  {
-            String [] datosusuario = filausuario.split(",");
-           String nombrecompleto = datosusuario[1] + " " + datosusuario[2];
-
-         //Toast.makeText(MainActivity.this, " "+ nombre, Toast.LENGTH_LONG).show();
-            Intent int01 = new Intent(MainActivity.this, MainActivity2.class);
-            int01.putExtra("USUARIO", nombrecompleto);
-            startActivity(int01);
-        }
-
-        @Override
-        protected void onPreExecute() {
-          // salida2.setText("Guardando...");
-        }
-
-
-    }*/
-
-
-
-
-
 
 }
 

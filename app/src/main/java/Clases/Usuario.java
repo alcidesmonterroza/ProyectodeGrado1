@@ -96,6 +96,9 @@ public class Usuario implements Serializable {
 
     }
 
+
+
+
     public ArrayList<String>   Consultar_destinatarios() throws ExecutionException, InterruptedException {
 
         hilo_consultardestinatarios a = new hilo_consultardestinatarios();
@@ -173,7 +176,7 @@ public class Usuario implements Serializable {
     private class hilo_consultarusuarios extends AsyncTask<String,String, ArrayList<Usuario>> {
         @Override
         protected ArrayList<Usuario> doInBackground(String... strings) {
-            String Miurl = "https://testud.azurewebsites.net/api/Usuariot?Id_usuario="+getid();
+            String Miurl = "https://testud.azurewebsites.net/api/Usuariot/"+getid()+"?nombre="+getNombre();
             ArrayList<Usuario> a = WebService.MyWebserviceusuario(Miurl);
             return  a;
         }

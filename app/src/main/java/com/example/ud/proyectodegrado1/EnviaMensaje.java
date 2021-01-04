@@ -5,12 +5,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +25,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Cifradora;
+import Utilidades.AdaptadorMensajes;
+import Utilidades.AdaptadorUsuarios;
 import Utilidades.Destinatarios;
 import Clases.Mensaje;
 import Clases.Usuario;
@@ -30,9 +36,12 @@ import Utilidades.UsuarioLogeado;
 public class EnviaMensaje extends AppCompatActivity {
 
     private Spinner listausuarios;
+    private ListView listadestinatarios;
+    private ArrayList<Usuario> usuarios;
     private TextView salida,fechaactual,mostrarusuario;
-    private EditText textomensaje, llaveprivada;
+    private EditText textomensaje, llaveprivada,buscar;
     private Toolbar toolbar;
+    private String nombreusu,apeusu,idusu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +53,13 @@ public class EnviaMensaje extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-        listausuarios = findViewById(R.id.spinner_destino);
+       // listausuarios = findViewById(R.id.spinner_destino);
+        listadestinatarios = findViewById(R.id.listadestino);
         salida = findViewById(R.id.textView18);
         fechaactual = findViewById(R.id.textView14);
         textomensaje = findViewById(R.id.editTextTextMultiLine);
         llaveprivada = findViewById(R.id.text_llaveprivada);
+        buscar =findViewById(R.id.text_buscar);
 
         //CAPTURA DE FECHA ACTUAL
         long date = System.currentTimeMillis();
@@ -64,6 +75,41 @@ public class EnviaMensaje extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        listadestinatarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                idusu = usuarios.get(position).getid().toString();
+                nombreusu =  usuarios.get(position).getNombre().toString();
+                apeusu = usuarios.get(position).getApellido().toString();
+            }
+        });
+
+        buscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                try {
+                    datosdeinicio();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,9 +164,9 @@ public class EnviaMensaje extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void datosdeinicio() throws ExecutionException, InterruptedException {
-        List<String> usuarios = new ArrayList<String>();
+
+      /*  List<String> usuarios = new ArrayList<String>();
         Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario");
         usuarios = usu.Consultar_destinatarios();
        // salida.setText(usuarios.get(0).toString()+ usuarios.get(1).toString()+usuarios.get(2).toString());
@@ -140,9 +186,24 @@ public class EnviaMensaje extends AppCompatActivity {
             //temporal.add(i, usuarios.get(1)+" "+usuarios.get(2));
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,temp);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//simple_spinner_item
-        listausuarios.setAdapter(adaptador);
+        listausuarios.setAdapter(adaptador);*/
 
+        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado,buscar.getText().toString(),"","","","","","");
+
+        try {
+            usuarios = usu.Consultar_usuarios();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        AdaptadorUsuarios adaptadorUsuarios;
+        adaptadorUsuarios = new AdaptadorUsuarios(this,0,usuarios);
+        listadestinatarios.setAdapter(adaptadorUsuarios);
+
+
+    }
 
         public void Enviarmenjaje(View v) throws ExecutionException, InterruptedException {
 
@@ -169,9 +230,10 @@ public class EnviaMensaje extends AppCompatActivity {
                      else {
 
                          //Definir el destinatario
-                         String destinotemp = listausuarios.getSelectedItem().toString();
-                         String [] dest = destinotemp.split(";");
-                         String destino = dest[0];
+                        // String destinotemp = listausuarios.getSelectedItem().toString();
+                        // String [] dest = destinotemp.split(";");
+                        // String destino = dest[0];
+                         String destino = idusu.replace("\"","");
 
                          //Se toma asgina valor a mensaje en claro el cual se toma del texto del mensaje
                          Cifradora cifra = new Cifradora();
@@ -191,12 +253,24 @@ public class EnviaMensaje extends AppCompatActivity {
 
                          Mensaje nuevomensaje = new Mensaje(fechaactual.getText().toString(), UsuarioLogeado.idusuariologeado, destino, mensajecifrado,
                                  llavecifrada);
-                         salida.setText(nuevomensaje.EnviarMensaje());
+                         String resp = nuevomensaje.EnviarMensaje();
+                         if(resp.replace("\"","").equals("Todo OK")){
+                             salida.setText("Mensaje Enviado");
+                             Toast.makeText(this, "Mensaje Enviado Correctamente", Toast.LENGTH_SHORT).show();
+                         }
+
+
                      }
             }
         }
 
+        public void limpiar(View v){
 
+        salida.setText("");
+        textomensaje.setText("");
+        llaveprivada.setText("");
+
+        }
 
 }
 

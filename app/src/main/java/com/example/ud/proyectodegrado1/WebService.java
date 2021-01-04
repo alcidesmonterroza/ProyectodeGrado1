@@ -157,7 +157,6 @@ public class WebService {
 
         return resTxT1;
 
-
     }
 
 
@@ -217,7 +216,6 @@ public class WebService {
         }
 
         return resTxT1;
-
 
     }
 }

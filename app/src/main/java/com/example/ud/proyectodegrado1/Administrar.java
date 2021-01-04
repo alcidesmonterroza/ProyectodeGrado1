@@ -31,7 +31,6 @@ public class Administrar extends AppCompatActivity {
     private Button btnEliminar, btnModificar;
     private ArrayList<Usuario> usuarios;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +49,12 @@ public class Administrar extends AppCompatActivity {
         btnEliminar =findViewById(R.id.button_eliminar);
         btnModificar = findViewById(R.id.button_modi);
 
-
-
         mostrarusuario = findViewById(R.id.textViewUsuario);
         mostrarusuario.setText("Usuario: "+ UsuarioLogeado.nombrecompleto);
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-
     }
-
 
     public void buscarusuario(View v) throws ExecutionException, InterruptedException {
 
@@ -84,7 +79,6 @@ public class Administrar extends AppCompatActivity {
                telefono.setText(encontrado.getTelefono().replace("\"",""));
                clave.setText(encontrado.getClave().replace("\"",""));
                perfil.setText(encontrado.getPerfil().replace("\"",""));
-
 
            }
 
@@ -129,7 +123,6 @@ public class Administrar extends AppCompatActivity {
 
         }
 
-
     }
 
     public void modificarusuario(View v) throws ExecutionException, InterruptedException {
@@ -168,8 +161,6 @@ public class Administrar extends AppCompatActivity {
             }
 
         }
-
-
 
     }
 

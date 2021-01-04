@@ -203,12 +203,10 @@ public class Cifradora{
                 default: letras[i] = ' '; break;
             }
 
-
         }
         String texto_msj_crifrado = new String(letras);
         return texto_msj_crifrado;
     }
-
 
 
    /* public String DescifrarMensajeSustitucion(String Mensaje){

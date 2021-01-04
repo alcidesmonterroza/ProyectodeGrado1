@@ -66,7 +66,7 @@ public class DatosActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         String per = UsuarioLogeado.perfil.replace("\"", "");
-        Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
         if (per.equals("Usuario")) {
             menu.removeItem(R.id.admin);
         }
@@ -133,8 +133,10 @@ public class DatosActivity extends AppCompatActivity {
                 apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
                 telefono.getText().toString(), clave.getText().toString(), "Usuario");
         String respuesta = u.Actualizar_Usuario();
-        salida.setText(respuesta);
-        Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
+        if(respuesta.replace("\"","").equals("Todo OK")){
+            salida.setText(respuesta);
+            Toast.makeText(this, "Datos Actualizados", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -153,7 +155,6 @@ public class DatosActivity extends AppCompatActivity {
 
         }
     }
-
 
 }
 

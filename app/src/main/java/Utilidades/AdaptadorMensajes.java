@@ -52,6 +52,7 @@ public class AdaptadorMensajes extends ArrayAdapter<Mensaje> {
 
     }
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View vi = convertView;
         final ViewHolder holder;
         try {

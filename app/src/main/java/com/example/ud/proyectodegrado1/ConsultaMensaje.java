@@ -36,6 +36,7 @@ public class ConsultaMensaje extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_mensaje);
 
@@ -53,7 +54,6 @@ public class ConsultaMensaje extends AppCompatActivity {
 
         cargardatos();
 
-
         listaMensajes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -62,14 +62,11 @@ public class ConsultaMensaje extends AppCompatActivity {
                 menssel =  mensajes.get(position).getMensaje().toString();
                 llavesel = mensajes.get(position).getLlave().toString();
                //Toast.makeText(ConsultaMensaje.this, "Has pulsado: "+ menssel + " "+llavesel, Toast.LENGTH_LONG).show();
-
             }
         });
 
     }
-
     //funciones del menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -77,7 +74,6 @@ public class ConsultaMensaje extends AppCompatActivity {
         inflater.inflate(R.menu.menumensajes, menu);
         return true;
    }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
@@ -123,11 +119,10 @@ public class ConsultaMensaje extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void actualizarmensajes(View v){
         cargardatos();
     }
+
     public void cargardatos(){
 
         Mensaje msj = new Mensaje("","",UsuarioLogeado.idusuariologeado,"","");
@@ -156,11 +151,11 @@ public class ConsultaMensaje extends AppCompatActivity {
             llaveclara.setText(descifra.CifrarLlaveporSustitucion());
         }
         else{
+
             Toast.makeText(this, "Seleccione un Mensaje", Toast.LENGTH_SHORT).show();
         }
 
     }
-
 
     public void desencriptamsj(View v){
         if(llaveclara.getText().toString().isEmpty() || llaveclara.getText().toString().trim().length()<1 || menssel == null){
@@ -172,6 +167,7 @@ public class ConsultaMensaje extends AppCompatActivity {
                 Toast.makeText(this, " Ojo no hay Mensaje para desencriptar", Toast.LENGTH_SHORT).show();
             }
             else{
+
                 Cifradora descifra1 = new Cifradora();
 
                 int longi = menssel.length();
@@ -185,13 +181,8 @@ public class ConsultaMensaje extends AppCompatActivity {
                 msjclaro.setText(mensajeclaro);
             }
 
-
         }
 
     }
-
-
-
-
 
 }

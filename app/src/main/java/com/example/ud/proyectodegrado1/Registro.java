@@ -44,6 +44,7 @@ public class Registro extends AppCompatActivity {
 
     public void registrarusuario(View v) throws ExecutionException, InterruptedException {
 
+
         String iden = cedula.getText().toString();
         String name = nombre.getText().toString();
         String apell = apellido.getText().toString();
@@ -53,18 +54,32 @@ public class Registro extends AppCompatActivity {
         String clav = clave.getText().toString();
         String perfil = "Usuario";
 
-        Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil);
-        String resp = usu.Registrar_Usuario();
-
-        if(resp.substring(1,3).equals("Se")){
-
-            salida2.setText("El Usuario ya existe en la Base de datos");
+        if(iden.isEmpty() || iden.trim().length()<1 || name.isEmpty() || name.trim().length()<1 ){
+            Toast.makeText(this, "Debe digitar Identificación y nombre", Toast.LENGTH_SHORT).show();
         }
         else{
-            salida2.setText(resp);
+            Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil);
+            String resp = usu.Registrar_Usuario();
+
+            if(resp.substring(1,3).equals("Se")){
+
+                salida2.setText("El Usuario ya existe en la Base de datos");
+                Toast.makeText(this, "El Usuario ya existe en la Base de datos", Toast.LENGTH_SHORT).show();
+            }
+            else{
+
+                if(resp.equals("\"Todo OK\"")){
+                    Toast.makeText(this, "El Usuario ha sido creado", Toast.LENGTH_SHORT).show();
+
+                    salida2.setText("El Usuario ha sido creado");
+                }
+
+            }
+
+            salida2.setVisibility(VISIBLE);
         }
-        salida2.setVisibility(VISIBLE);
-    }
+        }
+
 
     public void vuelvelogin(View v){
         Intent principal = new Intent(Registro.this,MainActivity.class);
