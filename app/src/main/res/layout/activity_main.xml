@@ -15,12 +15,6 @@
         tools:layout_editor_absoluteY="486dp">
 
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/imagenproyecto_preview_rev_2" />
-
         <TextView
             android:id="@+id/textView20"
             android:layout_width="match_parent"
@@ -29,6 +23,12 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/imagenmain" />
 
         <TextView
 
@@ -121,7 +121,7 @@
         <TextView
             android:id="@+id/textView22"
             android:layout_width="match_parent"
-            android:layout_height="97dp" />
+            android:layout_height="57dp" />
 
         <TextView
             android:id="@+id/textView23"
