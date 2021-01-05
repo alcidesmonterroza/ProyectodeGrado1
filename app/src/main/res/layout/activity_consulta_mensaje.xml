@@ -16,7 +16,7 @@
         <include
             android:id="@+id/appbar"
             layout="@layout/toolbar_menu"
-            android:gravity="start|left" />
+            android:gravity="left" />
 
 
         <TextView
