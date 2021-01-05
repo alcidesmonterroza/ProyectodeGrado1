@@ -27,18 +27,8 @@
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="238dp"
             app:srcCompat="@drawable/imagenmain" />
-
-        <TextView
-
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView8"
@@ -95,17 +85,21 @@
 
 
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="8sp" />
-
-
-        <TextView
             android:id="@+id/textView_salida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="8sp"
             android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="14sp"
+            android:text="¿No tienes una cuenta?"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button8"
@@ -113,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="registrarusuario"
-            android:text="Registrar"
+            android:text="Registrate"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +115,7 @@
         <TextView
             android:id="@+id/textView22"
             android:layout_width="match_parent"
-            android:layout_height="57dp" />
+            android:layout_height="153dp" />
 
         <TextView
             android:id="@+id/textView23"
