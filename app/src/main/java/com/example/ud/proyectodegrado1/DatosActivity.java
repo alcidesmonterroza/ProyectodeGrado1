@@ -34,6 +34,7 @@ public class DatosActivity extends AppCompatActivity {
         mostrarusuario = findViewById(R.id.textViewUsuario);
         mostrarusuario.setText("Usuario: "+UsuarioLogeado.nombrecompleto);
         toolbar = (Toolbar) findViewById(R.id.appbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         nombre = findViewById(R.id.nombretext);

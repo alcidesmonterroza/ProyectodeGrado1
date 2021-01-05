@@ -112,14 +112,24 @@
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Perfil"
+            android:textAlignment="viewStart"
+            android:textSize="20sp" />
+
         <Spinner
             android:id="@+id/spinner_perfil"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/textView29"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"

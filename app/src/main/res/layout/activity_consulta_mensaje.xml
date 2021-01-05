@@ -16,7 +16,8 @@
         <include
             android:id="@+id/appbar"
             layout="@layout/toolbar_menu"
-            android:gravity="left" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
         <TextView

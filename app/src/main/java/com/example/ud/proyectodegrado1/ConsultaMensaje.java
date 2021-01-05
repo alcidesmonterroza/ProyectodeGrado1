@@ -43,7 +43,13 @@ public class ConsultaMensaje extends AppCompatActivity {
         mostrarusuario = findViewById(R.id.textViewUsuario);
         mostrarusuario.setText("Usuario: "+UsuarioLogeado.nombrecompleto);
         toolbar = (Toolbar) findViewById(R.id.appbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+       // getActionBar().hide();
+
+        //getActionBar().setDisplayShowHomeEnabled(false);
+
+        Fuente: https://www.iteramos.com/pregunta/35473/como-se-puede-eliminar-el-texto-del-titulo-de-la-android-actionbar
 
         msjclaro = findViewById(R.id.textmensajeclaro);
         llaveclara = findViewById(R.id.text_llaveclara);

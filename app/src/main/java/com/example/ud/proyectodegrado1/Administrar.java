@@ -58,7 +58,9 @@ public class Administrar extends AppCompatActivity {
         mostrarusuario = findViewById(R.id.textViewUsuario);
         mostrarusuario.setText("Usuario: "+ UsuarioLogeado.nombrecompleto);
         toolbar = (Toolbar) findViewById(R.id.appbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
 
         llenarspiner();
 
