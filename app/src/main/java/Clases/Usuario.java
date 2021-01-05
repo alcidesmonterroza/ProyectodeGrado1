@@ -96,6 +96,14 @@ public class Usuario implements Serializable {
 
     }
 
+    public ArrayList<Usuario> administrar_usuario() throws ExecutionException, InterruptedException {
+
+        hilo_administrarusuarios a = new hilo_administrarusuarios();
+        ArrayList<Usuario> resp = a.execute().get();
+        return resp;
+
+    }
+
 
 
 
@@ -181,4 +189,13 @@ public class Usuario implements Serializable {
             return  a;
         }
     }
+    private class hilo_administrarusuarios extends AsyncTask<String,String, ArrayList<Usuario>> {
+        @Override
+        protected ArrayList<Usuario> doInBackground(String... strings) {
+            String Miurl = "https://testud.azurewebsites.net/api/Usuariot?id_usuario="+getid();
+            ArrayList<Usuario> a = WebService.MyWebserviceusuario(Miurl);
+            return  a;
+        }
+    }
+
 }

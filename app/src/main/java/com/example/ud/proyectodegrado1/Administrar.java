@@ -9,13 +9,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Mensaje;
@@ -30,6 +33,8 @@ public class Administrar extends AppCompatActivity {
     private ListView listausuarios;
     private Button btnEliminar, btnModificar;
     private ArrayList<Usuario> usuarios;
+    private Spinner Spinerperfiles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,8 @@ public class Administrar extends AppCompatActivity {
         email = findViewById(R.id.text_email);
         telefono = findViewById(R.id.text_tel);
         clave = findViewById(R.id.text_clave);
-        perfil = findViewById(R.id.text_perfil);
+        Spinerperfiles = findViewById(R.id.spinner_perfil);
+        //perfil = findViewById(R.id.text_perfil);
         //listausuarios=findViewById(R.id.List_usuarios);
         btnEliminar =findViewById(R.id.button_eliminar);
         btnModificar = findViewById(R.id.button_modi);
@@ -54,6 +60,21 @@ public class Administrar extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
+        llenarspiner();
+
+
+
+    }
+
+    public void llenarspiner(){
+
+        List<String> perfil = new ArrayList<String>();
+        perfil.add("Usuario");
+        perfil.add("Admin");
+
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,perfil);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinerperfiles.setAdapter(adaptador);
     }
 
     public void buscarusuario(View v) throws ExecutionException, InterruptedException {
@@ -64,7 +85,7 @@ public class Administrar extends AppCompatActivity {
        else{
 
            Usuario u = new Usuario(usuario.getText().toString(),"","","","","","","");
-           usuarios=u.Consultar_usuarios();
+           usuarios=u.administrar_usuario();
            //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
            if(usuarios.isEmpty()){
                Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_SHORT).show();
@@ -78,7 +99,13 @@ public class Administrar extends AppCompatActivity {
                email.setText(encontrado.getEmail().replace("\"",""));
                telefono.setText(encontrado.getTelefono().replace("\"",""));
                clave.setText(encontrado.getClave().replace("\"",""));
-               perfil.setText(encontrado.getPerfil().replace("\"",""));
+               if(encontrado.getPerfil().replace("\"","").equals("Usuario")){
+                   Spinerperfiles.setSelection(0);
+               }
+               else {
+                   Spinerperfiles.setSelection(1);
+               }
+
 
            }
 
@@ -149,12 +176,16 @@ public class Administrar extends AppCompatActivity {
                 else{
 
                     salida.setText("");
-                    Usuario u = new Usuario(usuarios.get(0).getid().replace("\"",""), nombre.getText().toString(),
+                    Usuario u = new Usuario(usuario.getText().toString(), nombre.getText().toString(),
                             apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                            telefono.getText().toString(), clave.getText().toString(), perfil.getText().toString());
+                            telefono.getText().toString(), clave.getText().toString(), Spinerperfiles.getSelectedItem().toString());
                     String respuesta = u.Actualizar_Usuario();
-                    salida.setText(respuesta);
-                    Toast.makeText(this, "resp: " + respuesta, Toast.LENGTH_SHORT).show();
+                    if(respuesta.replace("\"","").equals("Todo OK")){
+                        salida.setText("Usuario Actualizado");
+                        Toast.makeText(this, "Usuario Actualizado", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
                 }
 
@@ -193,25 +224,37 @@ public class Administrar extends AppCompatActivity {
                 startActivity(intent02);
                 break;
             case R.id.nuevomensaje:
-                Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
                 Intent intent03 = new Intent(this, EnviaMensaje.class);
                 startActivity(intent03);
                 break;
             //return true;
             case R.id.recibidos:
-                Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
                 Intent intent04 = new Intent(this,ConsultaMensaje.class);
                 startActivity(intent04);
                 //return true;
                 break;
             case R.id.enviados:
-                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+             //   Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.admin:
-                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+             //   Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
                 Intent intent06 = new Intent(this,Administrar.class);
                 startActivity(intent06);
+                break;
+
+            case R.id.cerrar:
+            //    Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
+                Intent intent07 = new Intent(this,MainActivity.class);
+
+                startActivity(intent07);
+                UsuarioLogeado.idusuariologeado=null;
+                UsuarioLogeado.clave=null;
+                UsuarioLogeado.nombrecompleto=null;
+                UsuarioLogeado.perfil=null;
+
                 break;
         }
 

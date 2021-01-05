@@ -123,7 +123,7 @@ public class EnviaMensaje extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         String per = UsuarioLogeado.perfil.replace("\"", "");
-        Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
         if (per.equals("Usuario")) {
             menu.removeItem(R.id.admin);
         }
@@ -139,25 +139,37 @@ public class EnviaMensaje extends AppCompatActivity {
                 startActivity(intent02);
                 break;
             case R.id.nuevomensaje:
-                Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
                 Intent intent03 = new Intent(this, EnviaMensaje.class);
                 startActivity(intent03);
                 break;
             //return true;
             case R.id.recibidos:
-                Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+            //    Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
                 Intent intent04 = new Intent(this,ConsultaMensaje.class);
                 startActivity(intent04);
                 //return true;
                 break;
             case R.id.enviados:
-                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.admin:
-                Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
                 Intent intent06 = new Intent(this,Administrar.class);
                 startActivity(intent06);
+                break;
+
+            case R.id.cerrar:
+             //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
+                Intent intent07 = new Intent(this,MainActivity.class);
+
+                startActivity(intent07);
+                UsuarioLogeado.idusuariologeado=null;
+                UsuarioLogeado.clave=null;
+                UsuarioLogeado.nombrecompleto=null;
+                UsuarioLogeado.perfil=null;
+
                 break;
         }
 

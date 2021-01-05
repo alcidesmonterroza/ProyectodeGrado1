@@ -8,6 +8,8 @@
     <string name="Subtítulo">Proyecto de Grado U.Distrital</string>
     <string name="Administrar">Administrar</string>
     <string name="title_activity_administrar">Administrar</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

@@ -74,7 +74,7 @@
                 android:id="@+id/text_alias"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Aliast" />
+                android:hint="Alias" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -96,6 +96,7 @@
                 android:id="@+id/text_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:hint="Telefono" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,19 +108,18 @@
                 android:id="@+id/text_clave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Clave" />
+                android:hint="Clave"
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_perfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Perfil" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,6 +151,8 @@
             android:id="@+id/txt_salida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
 
 
     </LinearLayout>
