@@ -148,6 +148,8 @@ public class ConsultaMensaje extends AppCompatActivity {
                 descifra1.setValordesplazamiento(Integer.parseInt(llaveclara.getText().toString()));
                 String mensajeclaro = descifra1.DescifrarMensajedesplazamiento();
                 msjclaro.setText(mensajeclaro);
+                cargardatos();
+
             }
 
         }

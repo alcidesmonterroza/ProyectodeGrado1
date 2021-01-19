@@ -2,9 +2,13 @@ package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -19,9 +23,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Cifradora;
@@ -112,70 +132,7 @@ public class EnviaMensaje extends AppCompatActivity {
         });
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menumensajes, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        String per = UsuarioLogeado.perfil.replace("\"", "");
-      //  Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
-        if (per.equals("Usuario")) {
-            menu.removeItem(R.id.admin);
-        }
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
-                Intent intent02 = new Intent(this, DatosActivity.class);
-                startActivity(intent02);
-                break;
-            case R.id.nuevomensaje:
-              //  Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
-                Intent intent03 = new Intent(this, EnviaMensaje.class);
-                startActivity(intent03);
-                break;
-            //return true;
-            case R.id.recibidos:
-            //    Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
-                Intent intent04 = new Intent(this,ConsultaMensaje.class);
-                startActivity(intent04);
-                //return true;
-                break;
-            case R.id.enviados:
-            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.admin:
-            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                Intent intent06 = new Intent(this,Administrar.class);
-                startActivity(intent06);
-                break;
-
-            case R.id.cerrar:
-             //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
-                Intent intent07 = new Intent(this,MainActivity.class);
-
-                startActivity(intent07);
-                UsuarioLogeado.idusuariologeado=null;
-                UsuarioLogeado.clave=null;
-                UsuarioLogeado.nombrecompleto=null;
-                UsuarioLogeado.perfil=null;
-
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void datosdeinicio() throws ExecutionException, InterruptedException {
 
@@ -270,6 +227,43 @@ public class EnviaMensaje extends AppCompatActivity {
                          if(resp.replace("\"","").equals("Todo OK")){
                              salida.setText("Mensaje Enviado");
                              Toast.makeText(this, "Mensaje Enviado Correctamente", Toast.LENGTH_SHORT).show();
+
+                             //Consultar el token del destinatario.
+
+                              Usuario u = new Usuario(destino,"","","","","","","","");
+                              String token = u.consultatoken();
+                            // HashMap<String,String> header =new HashMap<>();
+                            // header.put("MiTitulo","Mensajería");//; charset=utf-8
+                            // header.put("MiDetalle","Nuevo Mensaje");
+                          //   sendPushToSingleInstance(this,header,token.replace("\"",""));
+                             Toast.makeText(this, "destino: "+token.replace("\"",""), Toast.LENGTH_LONG).show();
+                             RequestQueue myrequest = Volley.newRequestQueue(getApplicationContext());
+                             JSONObject jsonObject = new JSONObject();
+                             try{
+                                    jsonObject.put("to",token.replace("\"",""));
+                                    JSONObject notificacion = new JSONObject();
+                                    notificacion.put("MiTitulo","Mensajería cifrada UD");
+                                    notificacion.put("MiDetalle","Tienes un Mensaje Nuevo de: "+ UsuarioLogeado.nombrecompleto);
+                                    jsonObject.put("data", notificacion);
+
+                                    String Url = "https://fcm.googleapis.com/fcm/send";
+                                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                                            Url.replace(" ",""),jsonObject,null,null){
+                                        @Override
+                                        public Map<String, String> getHeaders()  {
+                                           Map<String,String> header =new HashMap<>();
+                                           header.put("Content-Type","application/json");//; charset=utf-8
+                                           header.put("Authorization","key=AAAAFkcvS5Y:APA91bEZj1q8zG_ziYKPW_iJ2h4MuA1-gjDf-ZTyKchuZOR16KZftj-IcR4egjfJllqIOEVs2pbPRo8m06OZb9xfzp5sA8fqDcWOk1TskqeihmtYG-J1jIgeQyVUQzvxPatGRY2fn9UY");
+                                           return header;
+
+                                        }
+                                    };
+                                 Volley.newRequestQueue(this).add(request);
+                                  //  myrequest.add(request);
+                             }catch(JSONException e){
+                                e.printStackTrace();
+                             }
+
                          }
 
 
@@ -277,13 +271,110 @@ public class EnviaMensaje extends AppCompatActivity {
             }
         }
 
-        public void limpiar(View v){
+  /*  public static void sendPushToSingleInstance(final Context activity, final HashMap dataValue, final String instanceIdToken  )
+    {
+        final String url = "https://fcm.googleapis.com/fcm/send";
+        StringRequest myReq = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+
+        @Override public void onResponse(String response) {
+
+          Toast.makeText(activity, "Bingo Success", Toast.LENGTH_LONG).show();
+
+        }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(activity, "Oops error", Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+        @Override public byte[] getBody() throws com.android.volley.AuthFailureError {
+            Map<String, Object> rawParameters = new Hashtable();
+            rawParameters.put("data", new JSONObject(dataValue)); rawParameters.put("to", instanceIdToken);
+            return new JSONObject(rawParameters).toString().getBytes(); };
+
+        public String getBodyContentType() { return "application/json; charset=utf-8"; }
+        @Override public Map<String, String> getHeaders() throws AuthFailureError {
+            HashMap<String, String> headers = new HashMap<String, String>();
+            headers.put("Authorization", "key="+"AAAAFkcvS5Y:APA91bEZj1q8zG_ziYKPW_iJ2h4MuA1-gjDf-ZTyKchuZOR16KZftj-IcR4egjfJllqIOEVs2pbPRo8m06OZb9xfzp5sA8fqDcWOk1TskqeihmtYG-J1jIgeQyVUQzvxPatGRY2fn9UY");
+            return headers; } };
+    Volley.newRequestQueue(activity).add(myReq);
+    }*/
+
+    public void limpiar(View v){
 
         salida.setText("");
         textomensaje.setText("");
         llaveprivada.setText("");
 
         }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        String per = UsuarioLogeado.perfil.replace("\"", "");
+        //  Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+        if (per.equals("Usuario")) {
+            menu.removeItem(R.id.admin);
+        }
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                //  Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                //    Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.admin:
+                //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                Intent intent06 = new Intent(this,Administrar.class);
+                startActivity(intent06);
+                break;
+
+            case R.id.cerrar:
+                //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
+                Intent intent07 = new Intent(this,MainActivity.class);
+
+                startActivity(intent07);
+                UsuarioLogeado.idusuariologeado=null;
+                UsuarioLogeado.clave=null;
+                UsuarioLogeado.nombrecompleto=null;
+                UsuarioLogeado.perfil=null;
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
 

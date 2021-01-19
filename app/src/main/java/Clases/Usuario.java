@@ -214,17 +214,12 @@ public class Usuario implements Serializable {
 
     //esto no esta funcionando
     private class hilo_token extends AsyncTask<String,String, String> {
-        String a;
         @Override
         protected String doInBackground(String... strings) {
 
-            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(@NonNull Task<String> task) {
-                    a = task.getResult();
-                }
-            });
-            return  a;
+            String Miurl = "https://testud.azurewebsites.net/api/Usuariot?cedula4="+getid();
+            String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
+            return a;
         }
     }
 }

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -34,7 +36,7 @@ public class Registro extends AppCompatActivity {
     private Button validar,registrar;
     private TextView salida,salida2;
     String reciborespuesta,filausuario,resp;
-    public String tokencito,tokencito1;
+    public String tokencito,tokencito1,iden;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +54,22 @@ public class Registro extends AppCompatActivity {
         validar = findViewById(R.id.button2);
         registrar = findViewById(R.id.button3);
 
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( new OnCompleteListener<String>() {
+
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                tokencito1 = task.getResult();
+
+                //  getString(Integer.parseInt(tokencito),token1);
+                // Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     public void registrarusuario(View v) throws ExecutionException, InterruptedException {
 
-        String iden = cedula.getText().toString();
+        iden = cedula.getText().toString();
         String name = nombre.getText().toString();
         String apell = apellido.getText().toString();
         String nick = alias.getText().toString();
@@ -91,10 +104,10 @@ public class Registro extends AppCompatActivity {
           });
        }*/
 
-        Toast toast = Toast.makeText(Registro.this, "por fuera: "+ tokencito1,Toast.LENGTH_LONG);
-        //toast.setGravity(Gravity.CENTER|Gravity.LEFT,20,10);
-        toast.show();
-
+        Toast toast1 = Toast.makeText(Registro.this, "por fuera: "+ tokencito1,Toast.LENGTH_LONG);
+        toast1.setGravity(Gravity.CENTER|Gravity.LEFT,20,10);
+        toast1.show();
+       // Toast.makeText(this, "porfuera" + tokencito1, Toast.LENGTH_LONG).show();
 
 
      /*  FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( this,  new OnSuccessListener<InstanceIdResult>() {
@@ -136,7 +149,7 @@ public class Registro extends AppCompatActivity {
             Toast.makeText(this, "Debe digitar Identificación y nombre", Toast.LENGTH_SHORT).show();
         }
         else{
-            Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil,"1");
+            Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil,tokencito1);
             String resp = usu.Registrar_Usuario();
           //  Toast.makeText(this, ""+resp, Toast.LENGTH_LONG).show();
 
@@ -151,6 +164,10 @@ public class Registro extends AppCompatActivity {
                     Toast.makeText(this, "El Usuario ha sido creado", Toast.LENGTH_SHORT).show();
 
                     salida2.setText("El Usuario ha sido creado");
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
+                    ref.child(""+iden).setValue(tokencito1);
+
                 }
             }
 

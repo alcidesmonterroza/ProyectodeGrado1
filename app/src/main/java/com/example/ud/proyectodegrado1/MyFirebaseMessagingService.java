@@ -29,19 +29,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
         if (remoteMessage.getData().size()>0){
-        Log.e("MFC:",remoteMessage.getData().toString());
-        Log.e("MFC:",remoteMessage.getData().get("MyTitle"));
-        Log.e("MFC:",remoteMessage.getData().get("MyMessage"));
+    //    Log.e("MFC:",remoteMessage.getData().toString());
+      //  Log.e("MFC:",remoteMessage.getData().get("MyTitle"));
+      //  Log.e("MFC:",remoteMessage.getData().get("MyMessage"));
+
+            String titulo = remoteMessage.getData().get("MiTitulo");
+            String detalle =remoteMessage.getData().get("MiDetalle");
+            notificar(titulo,detalle);
 
          }
 
-        if(remoteMessage.getNotification() != null){
+      /*  if(remoteMessage.getNotification() != null){
         Log.e("TITULO: ", remoteMessage.getNotification().getTitle());
         Log.e("BODY: ", remoteMessage.getNotification().getBody());
 
-         }
-        notificar(remoteMessage);
+         }*/
+
     }
 
     @Override
@@ -49,19 +54,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onNewToken(s);
         Log.e("MI TOKEN: ","mi token es: " + s);
        // UsuarioLogeado.tokendispositivo=s;
-        guardartoken(s);
+      //  guardartoken(s);
 
     }
 
-    private void guardartoken(String s) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
-        ref.child("mensajeria").setValue(s);
-    }
+  //  private void guardartoken(String s) {
+     //   DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
+     //   ref.child("mensajeria").setValue(s);
+  //  }
 
-    public void notificar(RemoteMessage remoteMessage){
+    public void notificar(String tit, String det){
 
         String ns = Context.NOTIFICATION_SERVICE;
-        String CHannel_ID ="ud.com.Android";
+        String CHannel_ID ="com.example.ud.proyectodegrado1";
         NotificationManager ntManager = (NotificationManager)getSystemService(ns);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence name = "ANDROID CHANNEL";
@@ -72,10 +77,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             ntManager.createNotificationChannel(channel);
         }
 
-        int icono = android.R.drawable.stat_sys_warning;
-        CharSequence textEstado="ATENCION";
-        CharSequence titulo = remoteMessage.getNotification().getTitle();
-        CharSequence descripcion = remoteMessage.getNotification().getBody();
+        int icono = R.drawable.mensaje3;
+        CharSequence textEstado="MENSAJERÍA CIFRADA";
+        CharSequence titulo = tit; // remoteMessage.getNotification().getTitle() ;
+        CharSequence descripcion = det;// remoteMessage.getNotification().getBody();
         long hora = System.currentTimeMillis();
         Context contexto = getApplicationContext();
         Intent notIntent = new Intent(contexto,MainActivity.class);
@@ -83,7 +88,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder)
                 new NotificationCompat.Builder(getApplicationContext(),CHannel_ID)
                         .setSmallIcon(icono)
-                        .setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.mensaje)).getBitmap()))
+                        .setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.mensaje3)).getBitmap()))
                         .setContentTitle(titulo)
                         .setContentText(descripcion)
                         .setContentInfo(textEstado)
