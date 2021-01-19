@@ -2,7 +2,13 @@ package Clases;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import com.example.ud.proyectodegrado1.WebService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -19,9 +25,10 @@ public class Usuario implements Serializable {
     private  String telefono;
     private  String clave;
     private  String perfil;
-    public String respuesta2;
+    private  String token;
+   // public String respuesta2;
 
-    public Usuario(String id, String n, String ape,String ali, String em, String tel, String cla, String per )
+    public Usuario(String id, String n, String ape,String ali, String em, String tel, String cla, String per, String tok )
     {
        id_usuario = id;
        nombre = n;
@@ -31,6 +38,8 @@ public class Usuario implements Serializable {
        telefono = tel;
        clave = cla;
        perfil = per;
+       token = tok;
+
     }
 
     public String getid()
@@ -64,6 +73,10 @@ public class Usuario implements Serializable {
     public String getPerfil()
     {
         return perfil;
+    }
+    public String getToken()
+    {
+        return token;
     }
 
     public String Registrar_Usuario() throws ExecutionException, InterruptedException {
@@ -105,15 +118,11 @@ public class Usuario implements Serializable {
     }
 
 
-
-
     public ArrayList<String>   Consultar_destinatarios() throws ExecutionException, InterruptedException {
 
         hilo_consultardestinatarios a = new hilo_consultardestinatarios();
         ArrayList<String>  resp = a.execute().get();
         return resp;
-
-
     }
 
     public ArrayList<Usuario>  Consultar_usuarios() throws ExecutionException, InterruptedException {
@@ -121,8 +130,14 @@ public class Usuario implements Serializable {
         hilo_consultarusuarios a = new hilo_consultarusuarios();
         ArrayList<Usuario>  resp = a.execute().get();
         return resp;
+    }
 
+    //Esto no esta funcionando
+    public String consultatoken() throws ExecutionException, InterruptedException {
 
+        hilo_token a = new hilo_token();
+        String resp = a.execute().get();
+        return  resp;
     }
 
     private class hilo_registrarusuario extends AsyncTask<String,String,String> {
@@ -130,20 +145,19 @@ public class Usuario implements Serializable {
         protected String doInBackground(String... strings) {
             String Miurl = "https://testud.azurewebsites.net/api/Usuariot?cedula="+getid()
                     +"&nombre="+getNombre()+"&apellido="+getApellido()+"&alias="+getAlias()+"&email="+getEmail()
-                    +"&telefono="+getTelefono()+"&clave="+getClave()+"&perfil="+getPerfil();
+                    +"&telefono="+getTelefono()+"&clave="+getClave()+"&perfil="+getPerfil()+"&token="+getToken();
 
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
         }
     }
 
-
     private class hilo_actualizarusuario extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... strings) {
             String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula1="+getid()
                     +"&nombre1="+getNombre()+"&apellido1="+ getApellido()+"&alias1="+getAlias()
-                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil();
+                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil()+"&token="+getToken();
 
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
@@ -170,7 +184,6 @@ public class Usuario implements Serializable {
         }
     }
 
-
     private class hilo_consultardestinatarios extends AsyncTask<String,String, ArrayList<String>> {
         @Override
         protected ArrayList<String>   doInBackground(String... strings) {
@@ -189,6 +202,7 @@ public class Usuario implements Serializable {
             return  a;
         }
     }
+
     private class hilo_administrarusuarios extends AsyncTask<String,String, ArrayList<Usuario>> {
         @Override
         protected ArrayList<Usuario> doInBackground(String... strings) {
@@ -198,4 +212,19 @@ public class Usuario implements Serializable {
         }
     }
 
+    //esto no esta funcionando
+    private class hilo_token extends AsyncTask<String,String, String> {
+        String a;
+        @Override
+        protected String doInBackground(String... strings) {
+
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    a = task.getResult();
+                }
+            });
+            return  a;
+        }
+    }
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         String Usu = usuario.getText().toString();
         String Key = contrasena.getText().toString();
-        Usuario usu = new Usuario(Usu,"","","","","",Key,"Usuario");
+        Usuario usu = new Usuario(Usu,"","","","","",Key,"Usuario","");
         reciborespuesta = usu.Validar_Usuario();
 
         resp = reciborespuesta.replace("\"", "");
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             salida.setText(UsuarioLogeado.idusuariologeado);
             UsuarioLogeado.nombrecompleto= datosusuario[1] + " " + datosusuario[2];
             UsuarioLogeado.perfil = datosusuario[7];
+            UsuarioLogeado.tokenusuario = datosusuario[8];
             Intent int01 = new Intent(MainActivity.this, ConsultaMensaje.class);
            // int01.putExtra("USUARIO", nombrecompleto);
             startActivity(int01);

@@ -7,21 +7,28 @@
 
 
     <ImageView
-        android:layout_width="37dp"
-        android:layout_height="28dp"
+        android:id="@+id/imagen"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="25dp"
         app:srcCompat="@drawable/mensaje" />
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textidmensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="id"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/textfecha"
-            style="@style/Widget.AppCompat.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="fecha" />
@@ -46,6 +53,13 @@
             android:layout_height="wrap_content"
             android:text="Clave"
             android:visibility="visible" />
+        <TextView
+            android:id="@+id/leido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="leido"
+            android:visibility="invisible" />
+
     </LinearLayout>
 
 

@@ -1,28 +1,40 @@
 package com.example.ud.proyectodegrado1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
+import android.media.session.MediaSession;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.concurrent.ExecutionException;
 
 import Clases.Usuario;
+import Utilidades.UsuarioLogeado;
 
 import static android.view.View.VISIBLE;
 
 public class Registro extends AppCompatActivity {
 
-
     private EditText cedula,nombre,apellido,alias,correo,telefono,clave;
     private Button validar,registrar;
     private TextView salida,salida2;
     String reciborespuesta,filausuario,resp;
+    public String tokencito,tokencito1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +56,6 @@ public class Registro extends AppCompatActivity {
 
     public void registrarusuario(View v) throws ExecutionException, InterruptedException {
 
-
         String iden = cedula.getText().toString();
         String name = nombre.getText().toString();
         String apell = apellido.getText().toString();
@@ -53,13 +64,81 @@ public class Registro extends AppCompatActivity {
         String tele = telefono.getText().toString();
         String clav = clave.getText().toString();
         String perfil = "Usuario";
+      //  tokencito =  MyFirebaseMessagingService.getToken(Registro.this);
+      //  Usuario u = new Usuario("","","","","","","","","");
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( new OnCompleteListener<String>() {
+
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                tokencito1 = task.getResult();
+
+                //  getString(Integer.parseInt(tokencito),token1);
+               // Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
+            }
+        });
+
+     /* if (tokencito1.isEmpty()){
+          FirebaseMessaging.getInstance().getToken().addOnCompleteListener( new OnCompleteListener<String>() {
+
+              @Override
+              
+              public void onComplete(@NonNull Task<String> task) {
+                  tokencito1 = task.getResult();
+
+                  //  getString(Integer.parseInt(tokencito),token1);
+                  Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
+              }
+          });
+       }*/
+
+        Toast toast = Toast.makeText(Registro.this, "por fuera: "+ tokencito1,Toast.LENGTH_LONG);
+        //toast.setGravity(Gravity.CENTER|Gravity.LEFT,20,10);
+        toast.show();
+
+
+
+     /*  FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                tokencito = instanceIdResult.getToken();
+
+            }
+        });
+
+         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this, new OnSuccessListener<String>() {
+             @Override
+             public void onSuccess(String s) {
+             //    tokencito1 = s ;
+             }
+         });*/
+
+
+
+
+
+     /*  FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+            String token1 = task.getResult();
+             tokencito = token1;
+                Toast.makeText(Registro.this, "pordentro: "+token1, Toast.LENGTH_LONG).show();
+            }
+
+
+        });*/
+
+
+      //  Toast.makeText(Registro.this, "Usuariologeado: "+ UsuarioLogeado.tokendispositivo, Toast.LENGTH_LONG).show();
+
 
         if(iden.isEmpty() || iden.trim().length()<1 || name.isEmpty() || name.trim().length()<1 ){
             Toast.makeText(this, "Debe digitar Identificación y nombre", Toast.LENGTH_SHORT).show();
         }
         else{
-            Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil);
+            Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil,"1");
             String resp = usu.Registrar_Usuario();
+          //  Toast.makeText(this, ""+resp, Toast.LENGTH_LONG).show();
 
             if(resp.substring(1,3).equals("Se")){
 
@@ -73,15 +152,14 @@ public class Registro extends AppCompatActivity {
 
                     salida2.setText("El Usuario ha sido creado");
                 }
-
             }
 
             salida2.setVisibility(VISIBLE);
         }
         }
 
-
     public void vuelvelogin(View v){
+
         Intent principal = new Intent(Registro.this,MainActivity.class);
         startActivity(principal);
     }

@@ -120,9 +120,8 @@ public class DatosActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void cargardatos() throws ExecutionException, InterruptedException {
-        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario");
+        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario","");
         String reciborespuesta = usu.Validar_Usuario();
         String resp = reciborespuesta.replace("\"", "");
         if (resp.equals("No") || resp.equals("")) {
@@ -144,7 +143,7 @@ public class DatosActivity extends AppCompatActivity {
 
         Usuario u = new Usuario(UsuarioLogeado.idusuariologeado, nombre.getText().toString(),
                 apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                telefono.getText().toString(), clave.getText().toString(), "Usuario");
+                telefono.getText().toString(), clave.getText().toString(), "Usuario",UsuarioLogeado.tokenusuario);
         String respuesta = u.Actualizar_Usuario();
         if(respuesta.replace("\"","").equals("Todo OK")){
             salida.setText(respuesta);
@@ -157,7 +156,7 @@ public class DatosActivity extends AppCompatActivity {
 
         Usuario u = new Usuario(UsuarioLogeado.idusuariologeado, nombre.getText().toString(),
                 apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                telefono.getText().toString(), clave.getText().toString(), "Usuario");
+                telefono.getText().toString(), clave.getText().toString(), "Usuario",UsuarioLogeado.tokenusuario);
         String respuesta = u.Eliminar_Usuario();
         String resp = respuesta.replace("\"", "");
         if (resp.equals("Todo OK")) {

@@ -31,7 +31,7 @@ public class ConsultaMensaje extends AppCompatActivity {
     private ArrayList<Mensaje> mensajes;
     private TextView  msjclaro, mostrarusuario;
     private EditText llaveclara;
-    private String fechasel,remitesel,menssel,llavesel;
+    private String fechasel,remitesel,menssel,llavesel,estado,idmsj;
     private Toolbar toolbar;
 
     @Override
@@ -45,9 +45,6 @@ public class ConsultaMensaje extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-       // getActionBar().hide();
-
-        //getActionBar().setDisplayShowHomeEnabled(false);
 
         Fuente: https://www.iteramos.com/pregunta/35473/como-se-puede-eliminar-el-texto-del-titulo-de-la-android-actionbar
 
@@ -67,74 +64,29 @@ public class ConsultaMensaje extends AppCompatActivity {
 
                 menssel =  mensajes.get(position).getMensaje().toString();
                 llavesel = mensajes.get(position).getLlave().toString();
-               //Toast.makeText(ConsultaMensaje.this, "Has pulsado: "+ menssel + " "+llavesel, Toast.LENGTH_LONG).show();
+                estado = mensajes.get(position).getLeido().toString();
+                idmsj = mensajes.get(position).getId_mensaje().toString();
+
+                if(estado.replace("\"","").equals("0")){
+                    try {
+                        cambiarestado();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
         });
 
     }
-    //funciones del menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menumensajes, menu);
-        return true;
-   }
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        String per = UsuarioLogeado.perfil.replace("\"", "");
-      //  Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
-        if (per.equals("Usuario")) {
-            menu.removeItem(R.id.admin);
-        }
-        return true;
+    public void cambiarestado() throws ExecutionException, InterruptedException {
+        Mensaje m = new Mensaje(idmsj.replace("\"",""),"","","","","","");
+        m.Cambiarestado();
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
-                Intent intent02 = new Intent(this, DatosActivity.class);
-                startActivity(intent02);
-                break;
-            case R.id.nuevomensaje:
-             //   Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
-                Intent intent03 = new Intent(this, EnviaMensaje.class);
-                startActivity(intent03);
-                break;
-            //return true;
-            case R.id.recibidos:
-             //   Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
-                Intent intent04 = new Intent(this,ConsultaMensaje.class);
-                startActivity(intent04);
-                //return true;
-                break;
-            case R.id.enviados:
-            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.admin:
-            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                Intent intent06 = new Intent(this,Administrar.class);
-                startActivity(intent06);
-                break;
-            case R.id.cerrar:
-             //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
-                Intent intent07 = new Intent(this,MainActivity.class);
-
-                startActivity(intent07);
-                UsuarioLogeado.idusuariologeado=null;
-                UsuarioLogeado.clave=null;
-                UsuarioLogeado.nombrecompleto=null;
-                UsuarioLogeado.perfil=null;
-
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void actualizarmensajes(View v){
         cargardatos();
@@ -142,7 +94,7 @@ public class ConsultaMensaje extends AppCompatActivity {
 
     public void cargardatos(){
 
-        Mensaje msj = new Mensaje("","",UsuarioLogeado.idusuariologeado,"","");
+        Mensaje msj = new Mensaje("","","",UsuarioLogeado.idusuariologeado,"","","");
         try {
             mensajes = msj.ConsultarMensajes();
         } catch (ExecutionException e) {
@@ -201,5 +153,70 @@ public class ConsultaMensaje extends AppCompatActivity {
         }
 
     }
+
+    //funciones del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        String per = UsuarioLogeado.perfil.replace("\"", "");
+        //  Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+        if (per.equals("Usuario")) {
+            menu.removeItem(R.id.admin);
+        }
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                //   Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                //   Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.admin:
+                //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                Intent intent06 = new Intent(this,Administrar.class);
+                startActivity(intent06);
+                break;
+            case R.id.cerrar:
+                //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
+                Intent intent07 = new Intent(this,MainActivity.class);
+
+                startActivity(intent07);
+                UsuarioLogeado.idusuariologeado=null;
+                UsuarioLogeado.clave=null;
+                UsuarioLogeado.nombrecompleto=null;
+                UsuarioLogeado.perfil=null;
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

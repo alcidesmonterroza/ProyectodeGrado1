@@ -201,7 +201,7 @@ public class EnviaMensaje extends AppCompatActivity {
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//simple_spinner_item
         listausuarios.setAdapter(adaptador);*/
 
-        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado,buscar.getText().toString(),"","","","","","");
+        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado,buscar.getText().toString(),"","","","","","","");
 
         try {
             usuarios = usu.Consultar_usuarios();
@@ -264,8 +264,8 @@ public class EnviaMensaje extends AppCompatActivity {
 
                          salida.setText(mensajecifrado);
 
-                         Mensaje nuevomensaje = new Mensaje(fechaactual.getText().toString(), UsuarioLogeado.idusuariologeado, destino, mensajecifrado,
-                                 llavecifrada);
+                         Mensaje nuevomensaje = new Mensaje("",fechaactual.getText().toString(), UsuarioLogeado.idusuariologeado, destino, mensajecifrado,
+                                 llavecifrada,"0");
                          String resp = nuevomensaje.EnviarMensaje();
                          if(resp.replace("\"","").equals("Todo OK")){
                              salida.setText("Mensaje Enviado");

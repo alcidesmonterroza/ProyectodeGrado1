@@ -28,7 +28,7 @@ import Clases.Usuario;
 
 public class WebService {
 
-    private static Object RuntimeException;
+ //   private static Object RuntimeException;
 
     public static String MyWebservice(String urlservicio) {
 
@@ -53,7 +53,7 @@ public class WebService {
         } catch (IOException | RuntimeException e) {
             //System.out.println("error"+ e);
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
-            resTxT1 = "esto : "+e.getMessage();
+            resTxT1 = "esto1 : "+e.getMessage();
         }
 
         return resTxT1;
@@ -96,7 +96,7 @@ public class WebService {
         } catch (IOException | java.lang.RuntimeException e) {
             //System.out.println("error"+ e);
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
-               resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
+               resTxT1.set(0,"error"+e.getMessage()+e.getStackTrace());
             return null;
         }
 
@@ -130,12 +130,13 @@ public class WebService {
                 for (JsonElement elemento: ja) {
                     String fechat0 =  elemento.getAsJsonObject().get("fecha").toString();
                     String fecha = fechat0.replaceAll("T00:00:00","");
-
+                    String idmensaje = elemento.getAsJsonObject().get("id_mensaje").toString();
                     String remitente = elemento.getAsJsonObject().get("nombreremite").toString();
                     String destinatario = elemento.getAsJsonObject().get("destinatario").toString();
                     String mensaje = elemento.getAsJsonObject().get("mensaje").toString();
                     String llave = elemento.getAsJsonObject().get("llave").toString();
-                    Mensaje msj = new Mensaje(fecha,remitente,destinatario,mensaje,llave);
+                    String leido = elemento.getAsJsonObject().get("leido").toString();
+                    Mensaje msj = new Mensaje(idmensaje,fecha,remitente,destinatario,mensaje,llave,leido);
 
                     vector.add(msj);
                 }
@@ -150,7 +151,7 @@ public class WebService {
             //System.out.println("error"+ e);
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
            // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
-            Mensaje ms = new Mensaje("1","2","3","4","5");
+            Mensaje ms = new Mensaje("1","2","3","4","5","6","7");
             resTxT1.add(0, ms);
             return resTxT1;
         }
@@ -194,8 +195,9 @@ public class WebService {
                     String telefono = elemento.getAsJsonObject().get("telefono").toString();
                     String clave = elemento.getAsJsonObject().get("clave").toString();
                     String perfil = elemento.getAsJsonObject().get("perfil").toString();
+                    String token = elemento.getAsJsonObject().get("token").toString();
 
-                    Usuario usuario = new Usuario(id,nombre,apellido,alias,email,telefono,clave,perfil);
+                    Usuario usuario = new Usuario(id,nombre,apellido,alias,email,telefono,clave,perfil,token);
 
                     vector.add(usuario);
                 }
@@ -210,7 +212,7 @@ public class WebService {
             //System.out.println("error"+ e);
             // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
             // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
-            Usuario us = new Usuario("","","","","","","","");
+            Usuario us = new Usuario("","","","","","","","","");
             resTxT1.add(0, us);
             return resTxT1;
         }

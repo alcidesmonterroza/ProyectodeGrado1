@@ -86,7 +86,7 @@ public class Administrar extends AppCompatActivity {
        }
        else{
 
-           Usuario u = new Usuario(usuario.getText().toString(),"","","","","","","");
+           Usuario u = new Usuario(usuario.getText().toString(),"","","","","","","","");
            usuarios=u.administrar_usuario();
            //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
            if(usuarios.isEmpty()){
@@ -122,7 +122,7 @@ public class Administrar extends AppCompatActivity {
             salida.setText("");
         }
         else{
-            Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","");
+            Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","","");
             usuarios=ue.Consultar_usuarios();
             //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
             if(usuarios.isEmpty()){
@@ -132,7 +132,7 @@ public class Administrar extends AppCompatActivity {
             else{
 
                 salida.setText("");
-                Usuario u = new Usuario(usuario.getText().toString(), "","", "", "","","","");
+                Usuario u = new Usuario(usuario.getText().toString(), "","", "", "","","","","");
                 String respuesta = u.Eliminar_Usuario();
                 String resp = respuesta.replace("\"", "");
                 if (resp.equals("Todo OK")) {
@@ -168,7 +168,7 @@ public class Administrar extends AppCompatActivity {
 
             }
             else{
-                Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","");
+                Usuario ue = new Usuario(usuario.getText().toString(),"","","","","","","","");
                 usuarios=ue.Consultar_usuarios();
                 //Toast.makeText(this, ""+usuarios, Toast.LENGTH_SHORT).show();
                 if(usuarios.isEmpty()){
@@ -180,7 +180,7 @@ public class Administrar extends AppCompatActivity {
                     salida.setText("");
                     Usuario u = new Usuario(usuario.getText().toString(), nombre.getText().toString(),
                             apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
-                            telefono.getText().toString(), clave.getText().toString(), Spinerperfiles.getSelectedItem().toString());
+                            telefono.getText().toString(), clave.getText().toString(), Spinerperfiles.getSelectedItem().toString(),usuarios.get(0).getToken().toString());
                     String respuesta = u.Actualizar_Usuario();
                     if(respuesta.replace("\"","").equals("Todo OK")){
                         salida.setText("Usuario Actualizado");
