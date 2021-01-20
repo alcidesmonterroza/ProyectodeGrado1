@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E91E63"
-            android:textSize="5sp"
+            android:textSize="3sp"
             android:textStyle="bold"
             android:visibility="visible" />
 

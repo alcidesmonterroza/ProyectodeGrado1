@@ -65,7 +65,7 @@
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="_________________________________________________________________________________________________________________________________________________________"
+            android:text="____________________________________________________________________________________________________________________________________________________"
             android:textAlignment="center"
             android:textSize="5sp"
             android:textStyle="bold" />
@@ -85,7 +85,7 @@
             android:id="@+id/textView32"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="________________________________________________________________________________________________________________________________________________________"
+            android:text="____________________________________________________________________________________________________________________________________________________"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="5sp"
