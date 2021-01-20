@@ -17,11 +17,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".Administrar" />
-        <activity android:name=".Registro" />
-        <activity android:name=".ConsultaMensaje" />
-        <activity android:name=".DatosActivity" />
-        <activity android:name=".EnviaMensaje" />
+        <activity android:name=".Administrar" android:parentActivityName=".MainActivity" />
+        <activity android:name=".Registro" android:parentActivityName=".MainActivity" />
+        <activity android:name=".ConsultaMensaje" android:parentActivityName=".MainActivity" />
+        <activity android:name=".DatosActivity" android:parentActivityName=".MainActivity" />
+        <activity android:name=".EnviaMensaje" android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

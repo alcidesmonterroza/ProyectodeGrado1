@@ -9,9 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@+id/appbar"
@@ -35,67 +41,93 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="actualizarmensajes"
-            android:text="Actualizar Bandeja"
-            android:textAlignment="center"
-            android:textSize="12sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="            "/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="|  Nuevo "/>
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp">
 
-        <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            app:srcCompat="@drawable/mensaje3"
-            android:layout_gravity="center_vertical"/>
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="actualizarmensajes"
+                android:text="Actualizar Bandeja"
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="   |  Leído "/>
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            app:srcCompat="@drawable/mensaje"
-            android:layout_gravity="center_vertical"/>
-
-
-    </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="5sp" />
-            <!--android:background="#E91E63"-->
-
-
+            android:text="_________________________________________________________________________________________________________________________________________________________"
+            android:textAlignment="center"
+            android:textSize="5sp"
+            android:textStyle="bold" />
+        <!--android:background="#E91E63"-->
         <ListView
             android:id="@+id/listviewMensajes"
             style="@style/Widget.AppCompat.Light.ListView.DropDown"
             android:layout_width="match_parent"
             android:layout_height="239dp"
             android:contextClickable="true"
-            android:listSelector="@drawable/estadolist" />
-            <!--android:background="@drawable/estadolist"-->
+            android:listSelector="@drawable/estadolist">
 
+        </ListView>
+        <!--android:background="@drawable/estadolist"-->
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="________________________________________________________________________________________________________________________________________________________"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="5sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   No Leídos "
+                android:textSize="10sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/mensaje3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="    |   Leídos "
+                android:textSize="10sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/mensaje" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="8sp" />
 
         <Button
             android:id="@+id/button5"

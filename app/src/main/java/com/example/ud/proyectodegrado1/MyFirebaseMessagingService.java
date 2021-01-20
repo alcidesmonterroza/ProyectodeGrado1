@@ -41,11 +41,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
          }
 
-      /*  if(remoteMessage.getNotification() != null){
-        Log.e("TITULO: ", remoteMessage.getNotification().getTitle());
-        Log.e("BODY: ", remoteMessage.getNotification().getBody());
+        if(remoteMessage.getNotification() != null){
+      //  Log.e("TITULO: ", remoteMessage.getNotification().getTitle());
+      //  Log.e("BODY: ", remoteMessage.getNotification().getBody());
 
-         }*/
+         }
 
     }
 
@@ -63,42 +63,46 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      //   ref.child("mensajeria").setValue(s);
   //  }
 
-    public void notificar(String tit, String det){
+    public void notificar(String tit, String det) {
 
         String ns = Context.NOTIFICATION_SERVICE;
-        String CHannel_ID ="com.example.ud.proyectodegrado1";
-        NotificationManager ntManager = (NotificationManager)getSystemService(ns);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        String CHannel_ID = "com.example.ud.proyectodegrado1";
+        NotificationManager ntManager = (NotificationManager) getSystemService(ns);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "ANDROID CHANNEL";
             String descripcion = "CANAL DE NOTIFICACIONES ANDROID UD";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHannel_ID,name,importance);
+            NotificationChannel channel = new NotificationChannel(CHannel_ID, name, importance);
             channel.setDescription(descripcion);
             ntManager.createNotificationChannel(channel);
         }
 
         int icono = R.drawable.mensaje3;
-        CharSequence textEstado="MENSAJERÍA CIFRADA";
+        CharSequence textEstado = "MENSAJERÍA CIFRADA";
         CharSequence titulo = tit; // remoteMessage.getNotification().getTitle() ;
         CharSequence descripcion = det;// remoteMessage.getNotification().getBody();
         long hora = System.currentTimeMillis();
         Context contexto = getApplicationContext();
-        Intent notIntent = new Intent(contexto,MainActivity.class);
-        PendingIntent contIntent = PendingIntent.getActivity(contexto,0, notIntent,0);
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder)
-                new NotificationCompat.Builder(getApplicationContext(),CHannel_ID)
-                        .setSmallIcon(icono)
-                        .setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.mensaje3)).getBitmap()))
-                        .setContentTitle(titulo)
-                        .setContentText(descripcion)
-                        .setContentInfo(textEstado)
-                        .setWhen(hora)
-                        .setContentIntent(contIntent)
-                        .setAutoCancel(true)
-                        .setColor(getResources().getColor(R.color.colorPrimaryDark))
-                        .setVibrate(new long[]{100,250,100,500})
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-        ntManager.notify(1,mBuilder.build());
+            Intent notIntent = new Intent(contexto, MainActivity.class);
+            PendingIntent contIntent = PendingIntent.getActivity(contexto, 0, notIntent, 0);
+            NotificationCompat.Builder mBuilder = (NotificationCompat.Builder)
+                    new NotificationCompat.Builder(getApplicationContext(), CHannel_ID)
+                            .setSmallIcon(icono)
+                            .setLargeIcon((((BitmapDrawable) getResources().getDrawable(R.drawable.mensaje3)).getBitmap()))
+                            .setContentTitle(titulo)
+                            .setContentText(descripcion)
+                            .setContentInfo(textEstado)
+                            .setWhen(hora)
+                            .setContentIntent(contIntent)
+                            .setAutoCancel(true)
+                            .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+            ntManager.notify(1, mBuilder.build());
+        }
+
+
     }
-}
+
