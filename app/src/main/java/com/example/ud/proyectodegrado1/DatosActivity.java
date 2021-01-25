@@ -80,6 +80,7 @@ public class DatosActivity extends AppCompatActivity {
                 apellido.getText().toString(), alias.getText().toString(), email.getText().toString(),
                 telefono.getText().toString(), clave.getText().toString(), "Usuario",UsuarioLogeado.tokenusuario);
         String respuesta = u.Actualizar_Usuario();
+        Toast.makeText(this, ""+respuesta, Toast.LENGTH_SHORT).show();
         if(respuesta.replace("\"","").equals("Todo OK")){
             salida.setText(respuesta);
             Toast.makeText(this, "Datos Actualizados", Toast.LENGTH_SHORT).show();

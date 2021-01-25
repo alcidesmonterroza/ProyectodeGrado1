@@ -149,7 +149,7 @@ public class Usuario implements Serializable {
         protected String doInBackground(String... strings) {
             String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula1="+getid()
                     +"&nombre1="+getNombre()+"&apellido1="+ getApellido()+"&alias1="+getAlias()
-                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil()+"&token="+getToken();
+                    +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil();
 
             String a = WebService.MyWebservice(Miurl); //el Ws sirve para este caso//
             return  a;
