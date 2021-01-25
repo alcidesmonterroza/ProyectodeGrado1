@@ -1,11 +1,7 @@
 package Clases;
 
 import android.os.AsyncTask;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.ud.proyectodegrado1.WebService;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -31,7 +27,7 @@ public class Mensaje implements Serializable {
         leido = lei;
     }
 
-    public String getId_mensaje(){   return id_mensaje;    }
+    public String getId_mensaje(){ return id_mensaje; }
     public String getFecha(){
         return fecha;
     }
@@ -52,7 +48,6 @@ public class Mensaje implements Serializable {
         hilo_enviarmensaje a = new hilo_enviarmensaje();
         String resp = a.execute().get();
         return resp;
-
     }
 
     public String Cambiarestado() throws ExecutionException, InterruptedException {
@@ -62,6 +57,7 @@ public class Mensaje implements Serializable {
         return resp;
 
     }
+
     public ArrayList<Mensaje> ConsultarMensajes() throws ExecutionException, InterruptedException {
 
         hilo_consultarmensajes a = new hilo_consultarmensajes();
@@ -97,5 +93,4 @@ public class Mensaje implements Serializable {
             return  a;
         }
     }
-
 }

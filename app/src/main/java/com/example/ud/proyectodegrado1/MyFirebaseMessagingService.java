@@ -31,9 +31,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         if (remoteMessage.getData().size()>0){
-    //    Log.e("MFC:",remoteMessage.getData().toString());
-      //  Log.e("MFC:",remoteMessage.getData().get("MyTitle"));
-      //  Log.e("MFC:",remoteMessage.getData().get("MyMessage"));
 
             String titulo = remoteMessage.getData().get("MiTitulo");
             String detalle =remoteMessage.getData().get("MiDetalle");
@@ -42,8 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          }
 
         if(remoteMessage.getNotification() != null){
-      //  Log.e("TITULO: ", remoteMessage.getNotification().getTitle());
-      //  Log.e("BODY: ", remoteMessage.getNotification().getBody());
 
          }
 
@@ -53,15 +48,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         Log.e("MI TOKEN: ","mi token es: " + s);
-       // UsuarioLogeado.tokendispositivo=s;
-      //  guardartoken(s);
-
-    }
-
-  //  private void guardartoken(String s) {
-     //   DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
-     //   ref.child("mensajeria").setValue(s);
-  //  }
+     }
 
     public void notificar(String tit, String det) {
 
@@ -102,7 +89,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             ntManager.notify(1, mBuilder.build());
         }
-
 
     }
 

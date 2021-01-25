@@ -8,13 +8,11 @@ public class Cifradora{
     private  String mensajecifrado;
     private  Integer valordesplazamiento;
 
-    public String getMensajecifrado() {
-        return mensajecifrado;
-    }
-
     public void setMensajecifrado(String mensajecifrado) {
         this.mensajecifrado = mensajecifrado;
     }
+
+    public String getMensajecifrado() {  return mensajecifrado;   }
 
     public String getMensajeclaro() {
         return mensajeclaro;
@@ -32,41 +30,46 @@ public class Cifradora{
         this.valordesplazamiento = valordesplazamiento;
     }
 
+    // Metodo para cifrar por desplazamiento.
     public String CifrarMensajedesplazamiento(){
 
-        int longitud = getMensajeclaro().length();
-        char[] vectorcifrado = new char[longitud];
-
-        char[] mimatriz = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', ',', ';', ':', '.', '_', '-', '*', '!', '"', '$', '%', '(', ')', '=', '?', '¡', '¿', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','Ú','Ó','Í','É','Á','ú','ó','í','é','á','/', (char)13 };
-
+        int longitud = getMensajeclaro().length(); // se obtiene la longitud del mensaje a cifrar
+        char[] vectorcifrado = new char[longitud]; // se define un vector de caracteres donde se almacenará el mensaje cifrado.
+        char[] mimatriz = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c',
+                'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w', 'x', 'y', 'z', ' ', ',', ';', ':', '.', '_', '-', '*', '!', '"', '$', '%',
+                '(', ')', '=', '?', '¡', '¿', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','Ú','Ó','Í',
+                'É','Á','ú','ó','í','é','á','/', (char)13 }; // Se define un vector que contiene la base de caracteres que se usan en un mensaje.
         int posicion = 0;
         int nuevaposicion = 0;
-
         char letra_obtenida;
-        //char [] letrica = new char[1];
 
-        for (int i = 0; i < longitud; i++)
+        for (int i = 0; i < longitud; i++) // se establece un ciclo desde cero hasta el valor de la longirud del mensaje.
         {
 
-          char []  letrica = (getMensajeclaro().substring(i,i+1)).toCharArray();
+          char []  letrica = (getMensajeclaro().substring(i,i+1)).toCharArray(); // se almacena cada letra del mensaje en el vector "letrica"
 
-            for (int b = 0; b < 94; b++)
+            for (int b = 0; b < 94; b++) // con este ciclo se recorre el vector que contiene la base de caracteres
             {
-                if (  mimatriz[b]==letrica[0])
+                if (  mimatriz[b]==letrica[0]) // se pregunta si la letra del mensaje almacenada en "letrica", coincide con alguno de los caracteres
+                                                //que se encuentran en el vector de caracrteres base.
                 {
-                    posicion = b; break;
+                    posicion = b; break;  // si se cumple la condición se obtiene la posición.
                 }
             }
 
-            nuevaposicion = (posicion + getValordesplazamiento()) % 94;
-            letra_obtenida = mimatriz[nuevaposicion];
-            vectorcifrado[i] = letra_obtenida;
+            nuevaposicion = (posicion + getValordesplazamiento()) % 94; // de acruardo al valor de desplazamiento suministrado por el usuario
+                                                                        // se obtiene la nueva posición, esta es la formula del cifrado cesar.
+            letra_obtenida = mimatriz[nuevaposicion];// se guarda la letra obtenida
+            vectorcifrado[i] = letra_obtenida; // y se va agregando al vector cifrado.
         }
 
-        String  texto_msj_crifrado = new String(vectorcifrado);
-        return texto_msj_crifrado;
+        String  texto_msj_crifrado = new String(vectorcifrado); // se convierte el vetor cifrado en un String.
+        return texto_msj_crifrado; // se retorna el texto cifrado.
     }
 
+    // Método para descifrar por desplazamiento, funciona igual que el anterior, pero el contenido del vector base debe estar invertido.
     public String DescifrarMensajedesplazamiento(){
         char[] mimatriz = new char[] { (char)13, '/','á','é','í','ó','ú','Á','É','Í','Ó','Ú', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0', '¿', '¡', '?', '=', ')', '(', '%', '$', '"', '!', '*', '-', '_', '.', ':', ';', ',', ' ', 'z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'ñ', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'Ñ', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
 
@@ -100,21 +103,19 @@ public class Cifradora{
         return texto_msj_descifrado;
     }
 
+    // Método para cifrar por sustitución
     public String CifrarLlaveporSustitucion(){
 
-        //  mensaje = Mensaje;
+        int longitud = String.valueOf(getValordesplazamiento()).length();//se obtiene la longitud del mensaje a cifrar.
+        char[] letras = new char[longitud];//vector para guardar el mesaje cifrado.
 
-        int longitud = String.valueOf(getValordesplazamiento()).length();
-        char[] letras = new char[longitud];//vector para guardar el mesaje cifrado
-
-        for (int i = 0; i < longitud; i++)
+        for (int i = 0; i < longitud; i++) // se utiliza el ciclo para recorrer el mensaje a cicfrar
         {
-
-            char []  letrica = String.valueOf(getValordesplazamiento()).substring(i, i+1).toCharArray();
-
-            switch (letrica [0])
+            char []  letrica = String.valueOf(getValordesplazamiento()).substring(i, i+1).toCharArray();// se obtiene cada letra del mensaje a cifrar
+                                                                                                        // y se almacena en el vector "letrica"
+            switch (letrica [0]) // según sea la letra.
             {
-                case 'A': letras[i] = 'z'; break;
+                case 'A': letras[i] = 'z'; break; // se reempaza por la letra que corresponda según la base de letras escogida y se agrega alvector "letras"
                 case 'B': letras[i] = 'y'; break;
                 case 'C': letras[i] = 'x'; break;
                 case 'D': letras[i] = 'w'; break;
@@ -202,14 +203,8 @@ public class Cifradora{
                 case '9': letras[i] = '0'; break;
                 default: letras[i] = ' '; break;
             }
-
         }
-        String texto_msj_crifrado = new String(letras);
-        return texto_msj_crifrado;
+        String texto_msj_crifrado = new String(letras); // Se convierte el vector letras a string
+        return texto_msj_crifrado; // se retorna el texto cifrado.
     }
-
-
-   /* public String DescifrarMensajeSustitucion(String Mensaje){
-
-    } // El mismo metodo que cifra sirve para descifrar*/
 }

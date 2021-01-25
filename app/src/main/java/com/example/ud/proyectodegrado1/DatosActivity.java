@@ -25,7 +25,6 @@ public class DatosActivity extends AppCompatActivity {
     private TextView salida,mostrarusuario;
     private Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,72 +54,8 @@ public class DatosActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menumensajes, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        String per = UsuarioLogeado.perfil.replace("\"", "");
-       // Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
-        if (per.equals("Usuario")) {
-            menu.removeItem(R.id.admin);
-        }
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
-                Intent intent02 = new Intent(this, DatosActivity.class);
-                startActivity(intent02);
-                break;
-            case R.id.nuevomensaje:
-               // Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
-                Intent intent03 = new Intent(this, EnviaMensaje.class);
-                startActivity(intent03);
-                break;
-            //return true;
-            case R.id.recibidos:
-              //  Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
-                Intent intent04 = new Intent(this,ConsultaMensaje.class);
-                startActivity(intent04);
-                //return true;
-                break;
-            case R.id.enviados:
-             //   Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.admin:
-            //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
-                Intent intent06 = new Intent(this,Administrar.class);
-                startActivity(intent06);
-                break;
-
-            case R.id.cerrar:
-            //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
-                Intent intent07 = new Intent(this,MainActivity.class);
-
-                startActivity(intent07);
-                UsuarioLogeado.idusuariologeado=null;
-                UsuarioLogeado.clave=null;
-                UsuarioLogeado.nombrecompleto=null;
-                UsuarioLogeado.perfil=null;
-
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void cargardatos() throws ExecutionException, InterruptedException {
+
         Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario","");
         String reciborespuesta = usu.Validar_Usuario();
         String resp = reciborespuesta.replace("\"", "");
@@ -166,6 +101,71 @@ public class DatosActivity extends AppCompatActivity {
             startActivity(intent03);
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menumensajes, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        String per = UsuarioLogeado.perfil.replace("\"", "");
+        // Toast.makeText(this, "" + per, Toast.LENGTH_SHORT).show();
+        if (per.equals("Usuario")) {
+            menu.removeItem(R.id.admin);
+        }
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //Toast.makeText(this, "Mis Datos", Toast.LENGTH_LONG ).show();
+                Intent intent02 = new Intent(this, DatosActivity.class);
+                startActivity(intent02);
+                break;
+            case R.id.nuevomensaje:
+                // Toast.makeText(this, "NUEVO MENSAJE", Toast.LENGTH_LONG).show();
+                Intent intent03 = new Intent(this, EnviaMensaje.class);
+                startActivity(intent03);
+                break;
+            //return true;
+            case R.id.recibidos:
+                //  Toast.makeText(this, "RECIBIDOS", Toast.LENGTH_LONG).show();
+                Intent intent04 = new Intent(this,ConsultaMensaje.class);
+                startActivity(intent04);
+                //return true;
+                break;
+            case R.id.enviados:
+                //   Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.admin:
+                //    Toast.makeText(this, "ENVIADOS", Toast.LENGTH_LONG).show();
+                Intent intent06 = new Intent(this,Administrar.class);
+                startActivity(intent06);
+                break;
+
+            case R.id.cerrar:
+                //   Toast.makeText(this, "Cerrando Sesión", Toast.LENGTH_LONG).show();
+                Intent intent07 = new Intent(this,MainActivity.class);
+
+                startActivity(intent07);
+                UsuarioLogeado.idusuariologeado=null;
+                UsuarioLogeado.clave=null;
+                UsuarioLogeado.nombrecompleto=null;
+                UsuarioLogeado.perfil=null;
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

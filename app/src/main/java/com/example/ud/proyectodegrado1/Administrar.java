@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import Clases.Mensaje;
 import Clases.Usuario;
 import Utilidades.UsuarioLogeado;
 
@@ -29,8 +28,7 @@ public class Administrar extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView mostrarusuario,salida;
-    private EditText nombre,apellido,alias,email,telefono,clave, perfil,usuario;
-    private ListView listausuarios;
+    private EditText nombre,apellido,alias,email,telefono,clave, perfil, usuario;
     private Button btnEliminar, btnModificar;
     private ArrayList<Usuario> usuarios;
     private Spinner Spinerperfiles;
@@ -50,8 +48,6 @@ public class Administrar extends AppCompatActivity {
         telefono = findViewById(R.id.text_tel);
         clave = findViewById(R.id.text_clave);
         Spinerperfiles = findViewById(R.id.spinner_perfil);
-        //perfil = findViewById(R.id.text_perfil);
-        //listausuarios=findViewById(R.id.List_usuarios);
         btnEliminar =findViewById(R.id.button_eliminar);
         btnModificar = findViewById(R.id.button_modi);
 
@@ -60,12 +56,7 @@ public class Administrar extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
-
         llenarspiner();
-
-
-
     }
 
     public void llenarspiner(){
@@ -107,12 +98,8 @@ public class Administrar extends AppCompatActivity {
                else {
                    Spinerperfiles.setSelection(1);
                }
-
-
            }
-
        }
-
     }
 
     public void eliminarusuario(View v) throws ExecutionException, InterruptedException {

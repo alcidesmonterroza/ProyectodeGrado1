@@ -2,10 +2,7 @@ package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 
-import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,22 +13,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,23 +34,19 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import Clases.Cifradora;
-import Utilidades.AdaptadorMensajes;
 import Utilidades.AdaptadorUsuarios;
-import Utilidades.Destinatarios;
 import Clases.Mensaje;
 import Clases.Usuario;
 import Utilidades.UsuarioLogeado;
 
-
 public class EnviaMensaje extends AppCompatActivity {
 
-    private Spinner listausuarios;
+
     private ListView listadestinatarios;
     private ArrayList<Usuario> usuarios;
     private TextView salida,fechaactual,mostrarusuario;
@@ -136,28 +127,6 @@ public class EnviaMensaje extends AppCompatActivity {
 
     public void datosdeinicio() throws ExecutionException, InterruptedException {
 
-      /*  List<String> usuarios = new ArrayList<String>();
-        Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado, "", "", "", "", "", UsuarioLogeado.clave, "Usuario");
-        usuarios = usu.Consultar_destinatarios();
-       // salida.setText(usuarios.get(0).toString()+ usuarios.get(1).toString()+usuarios.get(2).toString());
-        List<Destinatarios> temporal =  new ArrayList<>();
-        List<String>temp = new ArrayList<String>();
-
-        String [] elemento = null;
-        for(int i=0;i<usuarios.size();i++ ) {
-
-            elemento=usuarios.get(i).split(",");
-            String id= elemento[0].replace("\"", "");
-            String nombrecompleto = elemento[1]+" "+elemento[2];
-            Destinatarios d = new Destinatarios(id,nombrecompleto);
-         //   temporal.add(i,d);
-            temp.add(i,d.getid() + "; " +d.getNombrecompleto());
-        }
-            //temporal.add(i, usuarios.get(1)+" "+usuarios.get(2));
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,temp);
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//simple_spinner_item
-        listausuarios.setAdapter(adaptador);*/
-
         Usuario usu = new Usuario(UsuarioLogeado.idusuariologeado,buscar.getText().toString(),"","","","","","","");
 
         try {
@@ -172,10 +141,9 @@ public class EnviaMensaje extends AppCompatActivity {
         adaptadorUsuarios = new AdaptadorUsuarios(this,0,usuarios);
         listadestinatarios.setAdapter(adaptadorUsuarios);
 
-
     }
 
-        public void Enviarmenjaje(View v) throws ExecutionException, InterruptedException {
+    public void Enviarmenjaje(View v) throws ExecutionException, InterruptedException {
 
             if( textomensaje.getText().toString().isEmpty() || textomensaje.getText().toString().trim().length()<1
             ||llaveprivada.getText().toString().isEmpty() || llaveprivada.getText().toString().trim().length()<1 ){
@@ -199,10 +167,6 @@ public class EnviaMensaje extends AppCompatActivity {
                      }
                      else {
 
-                         //Definir el destinatario
-                        // String destinotemp = listausuarios.getSelectedItem().toString();
-                        // String [] dest = destinotemp.split(";");
-                        // String destino = dest[0];
                          String destino = idusu.replace("\"","");
 
                          //Se toma asgina valor a mensaje en claro el cual se toma del texto del mensaje
@@ -228,14 +192,8 @@ public class EnviaMensaje extends AppCompatActivity {
                              salida.setText("Mensaje Enviado");
                              Toast.makeText(this, "Mensaje Enviado Correctamente", Toast.LENGTH_SHORT).show();
 
-                             //Consultar el token del destinatario.
-
-                              Usuario u = new Usuario(destino,"","","","","","","","");
-                              String token = u.consultatoken();
-                            // HashMap<String,String> header =new HashMap<>();
-                            // header.put("MiTitulo","Mensajería");//; charset=utf-8
-                            // header.put("MiDetalle","Nuevo Mensaje");
-                          //   sendPushToSingleInstance(this,header,token.replace("\"",""));
+                             Usuario u = new Usuario(destino,"","","","","","","","");
+                             String token = u.consultatoken();
                              Toast.makeText(this, "destino: "+token.replace("\"",""), Toast.LENGTH_LONG).show();
                              RequestQueue myrequest = Volley.newRequestQueue(getApplicationContext());
                              JSONObject jsonObject = new JSONObject();
@@ -259,7 +217,7 @@ public class EnviaMensaje extends AppCompatActivity {
                                         }
                                     };
                                  Volley.newRequestQueue(this).add(request);
-                                  //  myrequest.add(request);
+
                              }catch(JSONException e){
                                 e.printStackTrace();
                              }
@@ -270,38 +228,6 @@ public class EnviaMensaje extends AppCompatActivity {
                      }
             }
         }
-
-  /*  public static void sendPushToSingleInstance(final Context activity, final HashMap dataValue, final String instanceIdToken  )
-    {
-        final String url = "https://fcm.googleapis.com/fcm/send";
-        StringRequest myReq = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-
-        @Override public void onResponse(String response) {
-
-          Toast.makeText(activity, "Bingo Success", Toast.LENGTH_LONG).show();
-
-        }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(activity, "Oops error", Toast.LENGTH_LONG).show();
-            }
-        }) {
-
-        @Override public byte[] getBody() throws com.android.volley.AuthFailureError {
-            Map<String, Object> rawParameters = new Hashtable();
-            rawParameters.put("data", new JSONObject(dataValue)); rawParameters.put("to", instanceIdToken);
-            return new JSONObject(rawParameters).toString().getBytes(); };
-
-        public String getBodyContentType() { return "application/json; charset=utf-8"; }
-        @Override public Map<String, String> getHeaders() throws AuthFailureError {
-            HashMap<String, String> headers = new HashMap<String, String>();
-            headers.put("Authorization", "key="+"AAAAFkcvS5Y:APA91bEZj1q8zG_ziYKPW_iJ2h4MuA1-gjDf-ZTyKchuZOR16KZftj-IcR4egjfJllqIOEVs2pbPRo8m06OZb9xfzp5sA8fqDcWOk1TskqeihmtYG-J1jIgeQyVUQzvxPatGRY2fn9UY");
-            return headers; } };
-    Volley.newRequestQueue(activity).add(myReq);
-    }*/
 
     public void limpiar(View v){
 

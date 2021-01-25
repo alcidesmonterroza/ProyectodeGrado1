@@ -2,7 +2,6 @@ package com.example.ud.proyectodegrado1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -87,7 +86,6 @@ public class ConsultaMensaje extends AppCompatActivity {
         m.Cambiarestado();
     }
 
-
     public void actualizarmensajes(View v){
         cargardatos();
     }
@@ -127,6 +125,7 @@ public class ConsultaMensaje extends AppCompatActivity {
     }
 
     public void desencriptamsj(View v){
+
         if(llaveclara.getText().toString().isEmpty() || llaveclara.getText().toString().trim().length()<1 || menssel == null){
              Toast.makeText(this, " Ojo no hay llave para desencriptar", Toast.LENGTH_SHORT).show();
         }

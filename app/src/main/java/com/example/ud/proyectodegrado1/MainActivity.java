@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             UsuarioLogeado.perfil = datosusuario[7];
             UsuarioLogeado.tokenusuario = datosusuario[8];
             Intent int01 = new Intent(MainActivity.this, ConsultaMensaje.class);
-           // int01.putExtra("USUARIO", nombrecompleto);
+
             startActivity(int01);
         }
 

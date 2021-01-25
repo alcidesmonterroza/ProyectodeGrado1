@@ -60,8 +60,6 @@ public class Registro extends AppCompatActivity {
             public void onComplete(@NonNull Task<String> task) {
                 tokencito1 = task.getResult();
 
-                //  getString(Integer.parseInt(tokencito),token1);
-                // Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -77,72 +75,15 @@ public class Registro extends AppCompatActivity {
         String tele = telefono.getText().toString();
         String clav = clave.getText().toString();
         String perfil = "Usuario";
-      //  tokencito =  MyFirebaseMessagingService.getToken(Registro.this);
-      //  Usuario u = new Usuario("","","","","","","","","");
+
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener( new OnCompleteListener<String>() {
 
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 tokencito1 = task.getResult();
 
-                //  getString(Integer.parseInt(tokencito),token1);
-               // Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
             }
         });
-
-     /* if (tokencito1.isEmpty()){
-          FirebaseMessaging.getInstance().getToken().addOnCompleteListener( new OnCompleteListener<String>() {
-
-              @Override
-              
-              public void onComplete(@NonNull Task<String> task) {
-                  tokencito1 = task.getResult();
-
-                  //  getString(Integer.parseInt(tokencito),token1);
-                  Toast.makeText(Registro.this, "pordentro: "+tokencito1, Toast.LENGTH_LONG).show();
-              }
-          });
-       }*/
-
-        Toast toast1 = Toast.makeText(Registro.this, "por fuera: "+ tokencito1,Toast.LENGTH_LONG);
-        toast1.setGravity(Gravity.CENTER|Gravity.LEFT,20,10);
-        toast1.show();
-       // Toast.makeText(this, "porfuera" + tokencito1, Toast.LENGTH_LONG).show();
-
-
-     /*  FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( this,  new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                tokencito = instanceIdResult.getToken();
-
-            }
-        });
-
-         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this, new OnSuccessListener<String>() {
-             @Override
-             public void onSuccess(String s) {
-             //    tokencito1 = s ;
-             }
-         });*/
-
-
-
-
-
-     /*  FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-            String token1 = task.getResult();
-             tokencito = token1;
-                Toast.makeText(Registro.this, "pordentro: "+token1, Toast.LENGTH_LONG).show();
-            }
-
-
-        });*/
-
-
-      //  Toast.makeText(Registro.this, "Usuariologeado: "+ UsuarioLogeado.tokendispositivo, Toast.LENGTH_LONG).show();
 
 
         if(iden.isEmpty() || iden.trim().length()<1 || name.isEmpty() || name.trim().length()<1 ){
@@ -151,7 +92,6 @@ public class Registro extends AppCompatActivity {
         else{
             Usuario usu = new Usuario(iden,name,apell,nick,email,tele,clav,perfil,tokencito1);
             String resp = usu.Registrar_Usuario();
-          //  Toast.makeText(this, ""+resp, Toast.LENGTH_LONG).show();
 
             if(resp.substring(1,3).equals("Se")){
 

@@ -28,9 +28,7 @@ import Clases.Usuario;
 
 public class WebService {
 
- //   private static Object RuntimeException;
-
-    public static String MyWebservice(String urlservicio) {
+     public static String MyWebservice(String urlservicio) {
 
         String resTxT1 = null;
         try {
@@ -51,8 +49,7 @@ public class WebService {
 
             con.disconnect();
         } catch (IOException | RuntimeException e) {
-            //System.out.println("error"+ e);
-            // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
+
             resTxT1 = "esto1 : "+e.getMessage();
         }
 
@@ -94,8 +91,7 @@ public class WebService {
 
             con.disconnect();
         } catch (IOException | java.lang.RuntimeException e) {
-            //System.out.println("error"+ e);
-            // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
+
                resTxT1.set(0,"error"+e.getMessage()+e.getStackTrace());
             return null;
         }
@@ -209,9 +205,6 @@ public class WebService {
             con.disconnect();
         } catch (IOException | java.lang.RuntimeException e) {
 
-            //System.out.println("error"+ e);
-            // Toast.makeText(MainActivity.this, "error" + e, Toast.LENGTH_SHORT).show();
-            // resTxT1.set(0,"mierdita"+e.getMessage()+e.getStackTrace());
             Usuario us = new Usuario("","","","","","","","","");
             resTxT1.add(0, us);
             return resTxT1;

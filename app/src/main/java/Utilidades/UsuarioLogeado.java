@@ -6,8 +6,6 @@ public class UsuarioLogeado {
     public static String nombrecompleto;
     public static String perfil;
     public static String tokenusuario;
-    public static String tokendispositivo;
-
-}
+  }
 
 
