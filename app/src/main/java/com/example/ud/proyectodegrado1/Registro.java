@@ -105,8 +105,8 @@ public class Registro extends AppCompatActivity {
 
                     salida2.setText("El Usuario ha sido creado");
 
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
-                    ref.child(""+iden).setValue(tokencito1);
+                  //  DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("token");
+                  //  ref.child(""+iden).setValue(tokencito1);
 
                 }
             }

@@ -135,6 +135,7 @@ public class Usuario implements Serializable {
     private class hilo_registrarusuario extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... strings) {
+
             String Miurl = "https://testud.azurewebsites.net/api/Usuariot?cedula="+getid()
                     +"&nombre="+getNombre()+"&apellido="+getApellido()+"&alias="+getAlias()+"&email="+getEmail()
                     +"&telefono="+getTelefono()+"&clave="+getClave()+"&perfil="+getPerfil()+"&token="+getToken();
@@ -147,6 +148,7 @@ public class Usuario implements Serializable {
     private class hilo_actualizarusuario extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... strings) {
+
             String Miurl ="https://testud.azurewebsites.net/api/Usuariot?cedula1="+getid()
                     +"&nombre1="+getNombre()+"&apellido1="+ getApellido()+"&alias1="+getAlias()
                     +"&email1="+getEmail()+"&telefono1="+getTelefono()+"&clave1="+getClave()+"&perfil1="+getPerfil();
@@ -179,6 +181,7 @@ public class Usuario implements Serializable {
     private class hilo_consultarusuarios extends AsyncTask<String,String, ArrayList<Usuario>> {
         @Override
         protected ArrayList<Usuario> doInBackground(String... strings) {
+
             String Miurl = "https://testud.azurewebsites.net/api/Usuariot/"+getid()+"?nombre="+getNombre();
             ArrayList<Usuario> a = WebService.MyWebserviceusuario(Miurl);
             return  a;
@@ -188,6 +191,7 @@ public class Usuario implements Serializable {
     private class hilo_administrarusuarios extends AsyncTask<String,String, ArrayList<Usuario>> {
         @Override
         protected ArrayList<Usuario> doInBackground(String... strings) {
+
             String Miurl = "https://testud.azurewebsites.net/api/Usuariot?id_usuario="+getid();
             ArrayList<Usuario> a = WebService.MyWebserviceusuario(Miurl);
             return  a;
