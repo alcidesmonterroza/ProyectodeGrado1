@@ -183,7 +183,7 @@ public class EnviaMensaje extends AppCompatActivity {
                          //se cifra la llave por sustitucion
                          String llavecifrada = cifra.CifrarLlaveporSustitucion();
 
-                         salida.setText(mensajecifrado);
+                         //salida.setText(mensajecifrado);
 
                          Mensaje nuevomensaje = new Mensaje("",fechaactual.getText().toString(), UsuarioLogeado.idusuariologeado, destino, mensajecifrado,
                                  llavecifrada,"0");
@@ -194,7 +194,7 @@ public class EnviaMensaje extends AppCompatActivity {
 
                              Usuario u = new Usuario(destino,"","","","","","","","");
                              String token = u.consultatoken();
-                             Toast.makeText(this, "destino: "+token.replace("\"",""), Toast.LENGTH_LONG).show();
+                            // Toast.makeText(this, "destino: "+token.replace("\"",""), Toast.LENGTH_LONG).show();
                              RequestQueue myrequest = Volley.newRequestQueue(getApplicationContext());
                              JSONObject jsonObject = new JSONObject();
                              try{
